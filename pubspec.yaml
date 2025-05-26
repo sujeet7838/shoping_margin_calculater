@@ -61,7 +61,7 @@ flutter:
   assets:
   - assets/pagesize.json
   - assets/gsm.json
-  # - assets/snowfall.json
+  - assets/pagetype.json
   # - assets/sunny.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
