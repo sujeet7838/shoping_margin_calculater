@@ -62,7 +62,19 @@ flutter:
   - assets/pagesize.json
   - assets/gsm.json
   - assets/pagetype.json
-  # - assets/sunny.json
+  - assets/noPage.json
+  - assets/covertype.json
+  - assets/model_sprialbound.json
+  - assets/cover.json
+  - assets/board.json
+  - assets/coverquality.json
+  - assets/page.json
+  - assets/boundtype.json
+  - assets/pagethikness.json
+  - assets/model_staplebound.json
+
+  
+ 
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

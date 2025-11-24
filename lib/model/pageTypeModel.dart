@@ -1,7 +1,7 @@
 class PageType {
   final int id;
   final String name;
-  final int value;
+  final String value;
 
   PageType({required this.id, required this.name, required this.value});
   factory PageType.fromJson(Map<String, dynamic> json) {
