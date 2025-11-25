@@ -1,7 +1,4 @@
 import 'package:calculater/screens/homeScreen.dart';
-import 'package:calculater/screens/hometestdata.dart';
-
-
 import 'package:flutter/material.dart';
 
 void main() {

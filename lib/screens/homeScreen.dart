@@ -316,13 +316,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         : (value) {
                           setState(() {
                             selectedModelPage = value;
-
-                            // Load related list
                             if (value!.name == "A5/DC Sprial" ||
                                 value!.name == "Crown") {
                               coverColor = "Brown";
                             } else {
-                              coverColor = "White";
+                              coverColor = "Colour";
                             }
                           });
                         },
@@ -331,11 +329,11 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 15),
 
               /// AUTO SIZE LABEL
-              if (selectedModelPage != null)
-                Text(
-                  "Size: ${selectedModelPage!.value}",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+              // if (selectedModelPage != null)
+              //   Text(
+              //     "Size: ${selectedModelPage!.value}",
+              //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              //   ),
 
               SizedBox(height: 15),
               Text(
@@ -351,11 +349,14 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 15),
 
               TextField(
-                controller: TextEditingController()..text = coverColor,
+                controller: TextEditingController(
+                  text:
+                      selectedModelPage != null ? coverColor : 'Select a cover',
+                ),
                 readOnly: true,
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.black,
+                 // color: Colors.grey,
                   fontWeight: FontWeight.normal,
                 ),
                 decoration: InputDecoration(
