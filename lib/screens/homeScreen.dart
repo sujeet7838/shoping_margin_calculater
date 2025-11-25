@@ -18,24 +18,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String _result = '';
-  String boundValue = '';
+  String coverColor = 'Select a cover';
 
+  /// Lists
   List<Boundtype> boundTypePage = [];
+  List<ModelPage> spiralList = [];
+  List<ModelPage> stapleList = [];
+  List<ModelPage> filteredBrands = [];
+  List<CoverModel> coverList = [];
+
+  /// Selected items
   Boundtype? selectedboundTypePage;
-
-  List<ModelPage> modelPage = [];
   ModelPage? selectedModelPage;
-
-  List<ModelPage> modelPage2 = [];
-  ModelPage? selectedModelPage2;
-
-  List<String> listItem = [];
-
-
-
-
-  List<CoverModel> coverModel = [];
   CoverModel? selectedCover;
 
   List<CoverBoard> coverBoard = [];
@@ -55,6 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<CoverModel> coverType = [];
   CoverModel? selectedCoverType;
+
+  /// LOAD JSON FROM ASSETS /// ---------------------
+  Future<void> loadAllJsonData() async {
+    boundTypePage = await boundtyperomAsset();
+    spiralList = await modelspiralboundFromAsset();
+    stapleList = await modelstapleboundFromAsset();
+    coverList = await loadCoverAsset();
+
+    setState(() {});
+  }
 
   // Load JSON data from assets assets/boundtype.json
   Future<List<Boundtype>> boundtyperomAsset() async {
@@ -153,30 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    boundtyperomAsset().then((data) {
-      setState(() {
-        boundTypePage = data;
-      });
-    });
-
-    modelstapleboundFromAsset().then((data) {
-      setState(() {
-        modelPage = data;
-      });
-    });
-
-    modelspiralboundFromAsset().then((data) {
-      setState(() {
-        modelPage2 = data;
-      });
-    });
-
-    loadCoverAsset().then((data) {
-      setState(() {
-        coverModel = data;
-      });
-    });
+    loadAllJsonData();
+    // loadCoverAsset().then((data) {
+    //   setState(() {
+    //     coverModel = data;
+    //   });
+    // });
 
     boardCoverTypeAsset().then((data) {
       setState(() {
@@ -251,56 +237,43 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 15),
 
+              /// FIRST DROPDOWN — BINDING
               DropdownButtonFormField<Boundtype>(
-                value: selectedboundTypePage,
                 isExpanded: true,
-                hint: Text("Select a model"),
-                items:
-                    boundTypePage
-                        .map((boundTypePage) {
-                          return DropdownMenuItem<Boundtype>(
-                            value: boundTypePage,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
-                              child: Text(boundTypePage.name),
-                            ),
-                          );
-                        })
-                        .toSet()
-                        .toList(),
-                onChanged: (Boundtype? newValue) {
-                  setState(() {
-                    selectedboundTypePage = newValue;
-                    if (selectedboundTypePage == "Spiral Bound") {
-                      modelPage = modelPage2.cast<ModelPage>();
-                    } else if (selectedboundTypePage == "Staple Bound") {
-                      modelPage = modelPage.cast<ModelPage>();
-                    } else if (selectedboundTypePage == "Glu Bound") {
-                      //listItem = dataListC;
-                    }
-
-                    // if (selectedboundTypePage!.name == "Spiral Bound") {
-                    //   modelPage = modelPage2!.firstWhere(
-                    //       (element) => element.id == 1,
-                    //   ) as List<ModelPage>;
-                    //   print("selectet value ...${modelPage}");
-                    // } else if (selectedboundTypePage!.name == "Staple Bound") {
-                    //   modelPage = boundTypePage.firstWhere(
-                    //       (element) => element.id == 12,
-                    //   ) as List<ModelPage>;
-                    //   print("selectet value ...${boundValue}");
-                    // } else {
-
-                    //   print("selectet value ...${boundValue}");
-                    // }
-                  });
-                },
-
+                hint: Text("Select Bound Type "),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
+
+                value: selectedboundTypePage,
+                items:
+                    boundTypePage.map((b) {
+                      return DropdownMenuItem(
+                        value: b,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text(b.name),
+                        ),
+                      );
+                    }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedboundTypePage = value;
+                    selectedModelPage = null; // CLEAR BRAND
+                    filteredBrands = []; // CLEAR LIST
+
+                    // Load related list
+                    if (value!.id == 0) {
+                      filteredBrands = spiralList;
+                    } else if (value.id == 1) {
+                      filteredBrands = stapleList;
+                    } else {
+                      filteredBrands = [];
+                    }
+                  });
+                },
               ),
 
               SizedBox(height: 15),
@@ -317,46 +290,52 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 15),
 
+              /// SECOND DROPDOWN — BRAND
               DropdownButtonFormField<ModelPage>(
-                value: selectedModelPage,
                 isExpanded: true,
-                hint: Text("Select a Bound type"),
-                items:
-                    modelPage
-                        .map((modelPage) {
-                          return DropdownMenuItem<ModelPage>(
-                            value: modelPage,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
-                              child: Text(modelPage.name),
-                            ),
-                          );
-                        })
-                        .toSet()
-                        .toList(),
-                onChanged: (ModelPage? newValue) {
-                  setState(() {
-                    selectedModelPage = newValue;
-                    // print("selectet Bound Value ..."+selectedboundTypePage!.id.toString());
-
-                    // if (selectedboundTypePage!.id > 0 &&
-                    //     selectedboundTypePage!.id <= 11) {
-                    //   boundValue = newValue!.name;
-
-                    //   print("Staple bound type ...${boundValue}");
-                    // } else {
-                    //   boundValue = newValue!.name;
-                    //   print("Staple bound type ...${boundValue}");
-                    // }
-                  });
-                },
-
+                hint: Text("Select Model Type "),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
+                value: selectedModelPage,
+                items:
+                    filteredBrands.map((b) {
+                      return DropdownMenuItem(
+                        value: b,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text(b.name),
+                        ),
+                      );
+                    }).toList(),
+                onChanged:
+                    filteredBrands.isEmpty
+                        ? null
+                        : (value) {
+                          setState(() {
+                            selectedModelPage = value;
+
+                            // Load related list
+                            if (value!.name == "A5/DC Sprial" ||
+                                value!.name == "Crown") {
+                              coverColor = "Brown";
+                            } else {
+                              coverColor = "White";
+                            }
+                          });
+                        },
               ),
+
+              SizedBox(height: 15),
+
+              /// AUTO SIZE LABEL
+              if (selectedModelPage != null)
+                Text(
+                  "Size: ${selectedModelPage!.value}",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
 
               SizedBox(height: 15),
               Text(
@@ -371,31 +350,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 15),
 
-              DropdownButtonFormField<CoverModel>(
-                value: selectedCover,
-                hint: Text("Select a cover"),
-                items:
-                    coverModel
-                        .map((coverValue) {
-                          return DropdownMenuItem<CoverModel>(
-                            value: coverValue,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
-                              child: Text(coverValue.name),
-                            ),
-                          );
-                        })
-                        .toSet()
-                        .toList(),
-                onChanged: (CoverModel? newValueCover) {
-                  setState(() {
-                    selectedCover = newValueCover;
-                  });
-                },
+              TextField(
+                controller: TextEditingController()..text = coverColor,
+                readOnly: true,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                ),
                 decoration: InputDecoration(
-                  //labelText: 'Cover',
+                  filled: false,
+                  contentPadding: EdgeInsets.only(left: 30.0),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
@@ -553,7 +524,6 @@ class _HomeScreenState extends State<HomeScreen> {
               //     ),
               //   ),
               // ),
-
               SizedBox(height: 15),
               Text(
                 "No of Page",
