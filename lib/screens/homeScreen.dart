@@ -2,13 +2,12 @@ import 'dart:convert' show json;
 import 'package:calculater/model/boundtype.dart';
 import 'package:calculater/model/coverBoard.dart';
 import 'package:calculater/model/coverModel.dart';
-import 'package:calculater/model/coverquality.dart';
 import 'package:calculater/model/model.dart';
 import 'package:calculater/model/noOfPage.dart';
 import 'package:calculater/model/pageTypeModel.dart';
-import 'package:calculater/model/pagethikness.dart';
+import 'package:calculater/repositeries/calculator_repo.dart';
+import 'package:calculater/utils/SnackbarUtils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String coverColor = 'Select a cover';
+  String boardType = 'Select a board';
 
   /// Lists
   List<Boundtype> boundTypePage = [];
@@ -26,25 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ModelPage> stapleList = [];
   List<ModelPage> filteredBrands = [];
   List<CoverModel> coverList = [];
+  List<CoverBoard> coverBoard = [];
+  List<PageType> pageM = [];
+  List<NoOfPageModel> noOfPage = [];
 
   /// Selected items
   Boundtype? selectedboundTypePage;
   ModelPage? selectedModelPage;
   CoverModel? selectedCover;
-
-  List<CoverBoard> coverBoard = [];
   CoverBoard? selectedBoard;
-
-  List<CoverQuality> coverquality = [];
-  CoverQuality? selectedquality;
-
-  List<PageType> pageM = [];
   PageType? selectedPageM;
-
-  List<PageThikness> pagethikness = [];
-  PageThikness? selectedPagethikness;
-
-  List<NoOfPageModel> noOfPage = [];
   NoOfPageModel? selectedNoOfPage;
 
   List<CoverModel> coverType = [];
@@ -52,152 +43,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// LOAD JSON FROM ASSETS /// ---------------------
   Future<void> loadAllJsonData() async {
-    boundTypePage = await boundtyperomAsset();
-    spiralList = await modelspiralboundFromAsset();
-    stapleList = await modelstapleboundFromAsset();
-    coverList = await loadCoverAsset();
-
+    boundTypePage = await CalculatorRepository().boundtyperomAsset();
+    spiralList = await CalculatorRepository().modelspiralboundFromAsset();
+    stapleList = await CalculatorRepository().modelstapleboundFromAsset();
+    coverList = await CalculatorRepository().loadCoverAsset();
+    coverBoard = await CalculatorRepository().boardCoverTypeAsset();
+    pageM = await CalculatorRepository().pageMTypeAsset();
+    noOfPage = await CalculatorRepository().loadNoofPageAsset();
     setState(() {});
   }
 
-  // Load JSON data from assets assets/boundtype.json
-  Future<List<Boundtype>> boundtyperomAsset() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/boundtype.json',
-    );
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => Boundtype.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/model.json
-  Future<List<ModelPage>> modelstapleboundFromAsset() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/model_staplebound.json',
-    );
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => ModelPage.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/model2.json
-  Future<List<ModelPage>> modelspiralboundFromAsset() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/model_sprialbound.json',
-    );
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => ModelPage.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/CoverType.json
-  Future<List<CoverModel>> loadCoverAsset() async {
-    final String jsonString = await rootBundle.loadString('assets/cover.json');
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => CoverModel.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/CoverBoard.json
-  Future<List<CoverBoard>> boardCoverTypeAsset() async {
-    final String jsonString = await rootBundle.loadString('assets/board.json');
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => CoverBoard.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/CoverQuality.json
-  Future<List<CoverQuality>> qualityCoverTypeAsset() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/coverquality.json',
-    );
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => CoverQuality.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/page.json
-  Future<List<PageType>> pageMTypeAsset() async {
-    final String jsonString = await rootBundle.loadString('assets/page.json');
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => PageType.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/pagethikness.json
-  Future<List<PageThikness>> pagethiknessAsset() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/pagethikness.json',
-    );
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => PageThikness.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/noPage.json
-  Future<List<NoOfPageModel>> loadNoofPageAsset() async {
-    final String jsonString = await rootBundle.loadString('assets/noPage.json');
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => NoOfPageModel.fromJson(item)).toList();
-  }
-
-  // Load JSON data from assets assets/CoverType.json
-  Future<List<CoverModel>> loadCoverTypeAsset() async {
-    final String jsonString = await rootBundle.loadString(
-      'assets/covertype.json',
-    );
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-    return jsonResponse.map((item) => CoverModel.fromJson(item)).toList();
-  }
-
-  var snackBar = SnackBar(
-    content: Text(
-      ' Please wait, work in progress...',
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    ),
-    duration: Duration(seconds: 3),
-    backgroundColor: const Color.fromARGB(255, 240, 107, 151),
-  );
   @override
   void initState() {
     super.initState();
     loadAllJsonData();
-    // loadCoverAsset().then((data) {
-    //   setState(() {
-    //     coverModel = data;
-    //   });
-    // });
-
-    boardCoverTypeAsset().then((data) {
-      setState(() {
-        coverBoard = data;
-      });
-    });
-
-    qualityCoverTypeAsset().then((data) {
-      setState(() {
-        coverquality = data;
-      });
-    });
-
-    pageMTypeAsset().then((data) {
-      setState(() {
-        pageM = data;
-      });
-    });
-
-    pagethiknessAsset().then((data) {
-      setState(() {
-        pagethikness = data;
-      });
-    });
-    loadNoofPageAsset().then((data) {
-      setState(() {
-        noOfPage = data;
-      });
-    });
-
-    loadCoverTypeAsset().then((data) {
-      setState(() {
-        coverType = data;
-      });
-    });
   }
 
   @override
@@ -316,11 +175,51 @@ class _HomeScreenState extends State<HomeScreen> {
                         : (value) {
                           setState(() {
                             selectedModelPage = value;
-                            if (value!.name == "A5/DC Sprial" ||
+                            // cover color logic
+                            if (value!.name == "A5/DC" ||
                                 value!.name == "Crown") {
+                              coverColor = "Color & Brown";
+                            } else if (value!.name == "Crown 10") {
                               coverColor = "Brown";
                             } else {
                               coverColor = "Colour";
+                            }
+
+                            // board type logic
+                            if (value!.name == "Notes Lover" ||
+                                value!.name == "A4 Primum") {
+                              boardType = "SBS/WB/270";
+                            } else if (value!.name == "Youva Spiral" ||
+                                value!.name == "Youva") {
+                              boardType = "Duplex/WB/A4/250";
+                            } else if (value!.name == "Sawera" ||
+                                value!.name == "Sawera Spiral") {
+                              boardType = "Bahal/GB/190";
+                            } else if (value!.name == "Oblong Sprial" ||
+                                value!.name == "Oblong") {
+                              boardType = "Duplex/WB/OB/250";
+                            } else if (value!.name == "A5/DC" ||
+                                value!.name == "A5/DC Sprial") {
+                              boardType = "SBS/WB/250";
+                            } else if (value!.name == "RangRiti" ||
+                                value!.name == "Rangriti Spiral") {
+                              boardType = "Duplex/WB/RR/250";
+                            } else if (value!.name == "Star Kid") {
+                              boardType = "Duplex/WB/A5/250";
+                            } else if (value!.name == "Saptrishi") {
+                              boardType = "GB/NL/A5";
+                            } else if (value!.name == "Crown") {
+                              boardType = "Duplex/GB/230";
+                            } else if (value!.name == "Crown 10") {
+                              boardType = "Board/GB/180";
+                            } else if (value!.name == "Mogli") {
+                              boardType = "GB/NL/CR";
+                            } else if (value!.name == "Practical") {
+                              boardType = "Duplex/WB/PT/250";
+                            } else if (value!.name == "Scrape Book") {
+                              boardType = "Comming soon..";
+                            } else {
+                              boardType = "250 GSM";
                             }
                           });
                         },
@@ -334,7 +233,6 @@ class _HomeScreenState extends State<HomeScreen> {
               //     "Size: ${selectedModelPage!.value}",
               //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               //   ),
-
               SizedBox(height: 15),
               Text(
                 "Cover",
@@ -356,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 readOnly: true,
                 style: TextStyle(
                   fontSize: 18,
-                 // color: Colors.grey,
+                  // color: Colors.grey,
                   fontWeight: FontWeight.normal,
                 ),
                 decoration: InputDecoration(
@@ -385,50 +283,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 15),
 
-              DropdownButtonFormField<CoverBoard>(
-                value: selectedBoard,
-                hint: Text("Select a board"),
-                items:
-                    coverBoard.map((coverValue) {
-                      return DropdownMenuItem<CoverBoard>(
-                        value: coverValue,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Text(coverValue.name),
-                        ),
-                      );
-                    }).toList(),
-                onChanged: (CoverBoard? newValueCover) {
-                  setState(() {
-                    selectedBoard = newValueCover;
-                  });
-                },
-                decoration: InputDecoration(
-                  //labelText: 'Cover',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              // SizedBox(height: 15),
-              // Text(
-              //   "Cover thikness",
-              //   style: TextStyle(
-              //     fontSize: 18,
-              //     fontWeight: FontWeight.bold,
-              //     color: Colors.black,
-              //     fontFamily: 'Roboto',
-              //     fontStyle: FontStyle.normal,
-              //   ),
-              // ),
-              // SizedBox(height: 15),
-
-              // DropdownButtonFormField<CoverQuality>(
-              //   value: selectedquality,
-              //   hint: Text("Select a quality"),
+              // DropdownButtonFormField<CoverBoard>(
+              //   value: selectedBoard,
+              //   hint: Text("Select a board"),
               //   items:
-              //       coverquality.map((coverValue) {
-              //         return DropdownMenuItem<CoverQuality>(
+              //       coverBoard.map((coverValue) {
+              //         return DropdownMenuItem<CoverBoard>(
               //           value: coverValue,
               //           child: Padding(
               //             padding: const EdgeInsets.only(left: 16.0),
@@ -436,9 +296,9 @@ class _HomeScreenState extends State<HomeScreen> {
               //           ),
               //         );
               //       }).toList(),
-              //   onChanged: (CoverQuality? newValueCover) {
+              //   onChanged: (CoverBoard? newValueCover) {
               //     setState(() {
-              //       selectedquality = newValueCover;
+              //       selectedBoard = newValueCover;
               //     });
               //   },
               //   decoration: InputDecoration(
@@ -448,6 +308,30 @@ class _HomeScreenState extends State<HomeScreen> {
               //     ),
               //   ),
               // ),
+              TextField(
+                controller: TextEditingController(
+                  text:
+                      selectedModelPage != null ? boardType : 'Select a board',
+                ),
+                readOnly: true,
+                style: TextStyle(
+                  fontSize: 18,
+                  // color: Colors.grey,
+                  fontWeight: FontWeight.normal,
+                ),
+                decoration: InputDecoration(
+                  filled: false,
+                  contentPadding: EdgeInsets.only(left: 30.0),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+
               SizedBox(height: 15),
               Text(
                 "Page",
@@ -487,44 +371,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              // SizedBox(height: 15),
-              // Text(
-              //   "Page thikness",
-              //   style: TextStyle(
-              //     fontSize: 18,
-              //     fontWeight: FontWeight.bold,
-              //     color: Colors.black,
-              //     fontFamily: 'Roboto',
-              //     fontStyle: FontStyle.normal,
-              //   ),
-              // ),
-              // SizedBox(height: 15),
-
-              // DropdownButtonFormField<PageThikness>(
-              //   value: selectedPagethikness,
-              //   hint: Text("Select a page"),
-              //   items:
-              //       pagethikness.map((pagethikness) {
-              //         return DropdownMenuItem<PageThikness>(
-              //           value: pagethikness,
-              //           child: Padding(
-              //             padding: const EdgeInsets.only(left: 16.0),
-              //             child: Text(pagethikness.name),
-              //           ),
-              //         );
-              //       }).toList(),
-              //   onChanged: (PageThikness? newValuepagethikness) {
-              //     setState(() {
-              //       selectedPagethikness = newValuepagethikness;
-              //     });
-              //   },
-              //   decoration: InputDecoration(
-              //     //labelText: 'Cover',
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(20),
-              //     ),
-              //   ),
-              // ),
               SizedBox(height: 15),
               Text(
                 "No of Page",
@@ -563,47 +409,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
-              // Text(
-              //   "Cover Type",
-              //   style: TextStyle(
-              //     fontSize: 18,
-              //     fontWeight: FontWeight.bold,
-              //     color: Colors.black,
-              //     fontFamily: 'Roboto',
-              //     fontStyle: FontStyle.normal,
-              //   ),
-              // ),
-              // SizedBox(height: 15),
 
-              // DropdownButtonFormField<CoverModel>(
-              //   value: selectedCoverType,
-              //   hint: Text("Select a cover type"),
-              //   items:
-              //       coverType.map((coverValue) {
-              //         return DropdownMenuItem<CoverModel>(
-              //           value: coverValue,
-              //           child: Text(coverValue.name),
-              //         );
-              //       }).toList(),
-              //   onChanged: (CoverModel? newValueCover) {
-              //     setState(() {
-              //       selectedCoverType = newValueCover;
-              //     });
-              //   },
-              //   decoration: InputDecoration(
-              //     //labelText: 'Cover',
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(20),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(height: 15),
+              SizedBox(height: 15),
+
               Text(
                 selectedboundTypePage == null &&
                         selectedCover == null &&
                         selectedBoard == null &&
-                        selectedquality == null &&
                         selectedPageM == null &&
                         selectedNoOfPage == null
                     ? "No value selected"
@@ -613,13 +425,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? "No value selected"
                     : selectedBoard == null
                     ? "No value selected"
-                    : selectedquality == null
-                    ? "No value selected"
                     : selectedPageM == null
                     ? "No value selected"
                     : selectedNoOfPage == null
                     ? "No value selected"
-                    : "You selected: ${selectedboundTypePage!.value} , ${selectedCover!.name}, ${selectedBoard!.value}, ${selectedquality!.value}, ${selectedPageM!.value},${selectedNoOfPage!.value}",
+                    : "You selected: ${selectedboundTypePage!.value} , ${selectedCover!.name}, ${selectedBoard!.value}, ${selectedPageM!.value},${selectedNoOfPage!.value}",
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 25),
@@ -638,13 +448,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       selectedModelPage,
                       selectedCover,
                       selectedBoard,
-                      selectedquality,
+
                       selectedPageM,
                       selectedNoOfPage,
                       selectedCoverType,
                     );
 
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackbarUtils().snackBar);
                   },
                   child: Text(
                     'Calculate',
@@ -669,14 +481,14 @@ class _HomeScreenState extends State<HomeScreen> {
     ModelPage? selectedboundTypePage,
     CoverModel? selectedCover,
     CoverBoard? selectedBoard,
-    CoverQuality? selectedquality,
+
     PageType? selectedPageM,
     NoOfPageModel? selectedNoOfPage,
     CoverModel? selectedCoverType,
   ) {
     final stPageSize = double.tryParse(selectedboundTypePage!.value.toString());
-    final stGsm = double.tryParse(selectedquality!.name.toString());
+    // final stGsm = double.tryParse(selectedquality!.name.toString());
 
-    print("Result: ${selectedboundTypePage!.value}, ${selectedquality!.name}");
+    print("Result: ${selectedboundTypePage!.value}, ");
   }
 }

@@ -2,62 +2,80 @@
   {
     "id": 0,
     "name": "Mogli",
-    "value": "46x70"
+    "size": "46x70",
+    "value": "3220"
   },
   {
     "id": 1,
     "name": "Crown",
-    "value": "46x70"
+    "size": "46x70",
+    "value": "3220"
   },
-  {
+    {
     "id": 2,
-    "name": "A5/DC",
-    "value": "49x74"
+    "name": "Crown 10",
+    "size": "46x70",
+    "value": "3220"
   },
   {
     "id": 3,
-    "name": "Star Kid",
-    "value": "49x74"
+    "name": "A5/DC",
+    "size": "49x74",
+    "value": "3626"
   },
   {
     "id": 4,
-    "name": "Saptrishi",
-    "value": "49x74"
+    "name": "Star Kid",
+    "size": "49x74",
+    "value": "3626"
   },
   {
     "id": 5,
-    "name": "Sawera",
-    "value": "54x78"
+    "name": "Saptrishi",
+    "size": "49x74",
+    "value": "3626"
   },
   {
     "id": 6,
-    "name": "Oblong",
-    "value": "55x69"
+    "name": "Sawera",
+    "size": "54x78",
+    "value": "4212"
   },
   {
     "id": 7,
-    "name": "A4 Primum",
-    "value": "60x84"
+    "name": "Oblong",
+    "size": "55x69",
+    "value": "3795"
   },
   {
     "id": 8,
-    "name": "Youva",
-    "value": "58x81"
+    "name": "A4 Primum",
+    "size": "60x84",
+    "value": "5040"
   },
   {
     "id": 9,
-    "name": "RangRiti",
-    "value": "68x96"
+    "name": "Youva",
+    "size": "58x81",
+    "value": "4698"
   },
   {
     "id": 10,
-    "name": "Practical",
-    "value": "58x88"
+    "name": "RangRiti",
+    "size": "68x96",
+    "value": "6528"
   },
   {
     "id": 11,
+    "name": "Practical",
+    "size": "58x88",
+    "value": "5104"
+  },
+  {
+    "id": 12,
     "name": "Scrape Book",
-    "value": "60x84"
+    "size": "60x84",
+    "value": "5040"
   }
 
 ]

@@ -2,31 +2,39 @@
   {
     "id": 0,
     "name": "Notes Lover",
-    "value": "60x84"
+    "size": "60x84",
+    "value": "5040"
+   
+
   },
   {
     "id": 1,
     "name": "Youva Spiral",
-    "value": "60x84"
+    "size": "60x84",
+    "value": "5040"
   },
   {
     "id": 2,
     "name": "Sawera Spiral",
-    "value": "54x78"
+    "size": "54x78",
+    "value": "4212"
   },
   {
     "id": 3,
     "name": "Oblong Sprial",
-    "value": "55x69"
+    "size": "55x69",
+    "value": "3795"
   },
   {
     "id": 4,
     "name": "A5/DC Sprial",
-    "value": "49x74"
+    "size": "49x74",
+    "value": "3626"
   },
   {
     "id": 5,
     "name": "Rangriti Spiral",
-    "value": "68x96"
+    "size": "68x96",
+    "value": "6528"
   }
 ]
