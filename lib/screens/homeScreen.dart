@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Boundtype> boundTypePage = [];
   List<ModelPage> spiralList = [];
   List<ModelPage> stapleList = [];
+  List<ModelPage> gluList = [];
   List<ModelPage> filteredBrands = [];
   List<CoverModel> coverList = [];
   List<CoverBoard> coverBoard = [];
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     boundTypePage = await CalculatorRepository().boundtyperomAsset();
     spiralList = await CalculatorRepository().modelspiralboundFromAsset();
     stapleList = await CalculatorRepository().modelstapleboundFromAsset();
+    gluList = await CalculatorRepository().modelgluboundFromAsset();
     coverList = await CalculatorRepository().loadCoverAsset();
     coverBoard = await CalculatorRepository().boardCoverTypeAsset();
     pageM = await CalculatorRepository().pageMTypeAsset();
@@ -85,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 15),
 
               Text(
-                "Bound type",
+                "Article",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -128,6 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       filteredBrands = spiralList;
                     } else if (value.id == 1) {
                       filteredBrands = stapleList;
+                    } else if (value.id == 2) {
+                      filteredBrands = gluList;
                     } else {
                       filteredBrands = [];
                     }
@@ -218,8 +222,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               boardType = "Duplex/WB/PT/250";
                             } else if (value!.name == "Scrape Book") {
                               boardType = "Comming soon..";
+                            } else if (value!.name == "Creater") {
+                              boardType = "Duplex/WB/A4/250";
+                            } else if (value!.name == "Sawera") {
+                              boardType = "Bahal/GB/190";
                             } else {
-                              boardType = "250 GSM";
+                              boardType = "Select a board";
                             }
                           });
                         },

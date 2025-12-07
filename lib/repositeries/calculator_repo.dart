@@ -36,6 +36,15 @@ class CalculatorRepository {
     return jsonResponse.map((item) => ModelPage.fromJson(item)).toList();
   }
 
+  // Load JSON data from assets assets/model_glubound.json
+  Future<List<ModelPage>> modelgluboundFromAsset() async {
+    final String jsonString = await rootBundle.loadString(
+      'assets/model_glubound.json',
+    );
+    final List<dynamic> jsonResponse = json.decode(jsonString);
+    return jsonResponse.map((item) => ModelPage.fromJson(item)).toList();
+  }
+
   //Load JSON data from assets assets/CoverType.json
   Future<List<CoverModel>> loadCoverAsset() async {
     final String jsonString = await rootBundle.loadString('assets/cover.json');
