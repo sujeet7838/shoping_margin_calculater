@@ -10,7 +10,8 @@
   { "id": 3, "name": "Bahal/GB/190", "value": "2.10"},
   { "id": 3, "name": "Board/GB/180", "value": "1.50"},
   { "id": 4, "name": "GB/NL/A5", "value": "1.10"},
-  { "id": 1, "name": "GB/NL/CR", "value": "0.60" }
+  { "id": 1, "name": "GB/NL/CR", "value": "0.60" },
+  { "id": 1, "name": "GB/CR 180", "value": "1" }
 
   
 ]

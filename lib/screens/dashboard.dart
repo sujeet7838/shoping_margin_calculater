@@ -27,6 +27,13 @@ class _DeshboardPageState extends State<DeshboardPage> {
   String bindingvalue = '';
   String result = '';
 
+  // size of page value
+  String sizeOfPage = '';
+
+  // board Value
+  String boardPrice = '';
+   final finalResult = '';
+
   /// ------------------ STATIC DROPDOWN 1 ------------------
   final List<String> bindingTypes =
       [
@@ -158,7 +165,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                         onChanged: (value) {
                           setState(() {
                             onTypeChanged(value);
-                             articlevalue = value!;
+                            articlevalue = value!;
                             print('Selected Type: $value.value');
                           });
                         },
@@ -179,7 +186,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                       SizedBox(height: 15),
 
                       /// Dropdown 2 – Page
-                      DropdownButtonFormField<String>( 
+                      DropdownButtonFormField<String>(
                         hint: Text("Select a model"),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -211,67 +218,99 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                       colorValue = coverColor;
                                     } else if (selectedPage == "Crown 10") {
                                       coverColor = "Brown";
-                                       colorValue = coverColor;
+                                      colorValue = coverColor;
                                     } else {
                                       coverColor = "Colour";
-                                       colorValue = coverColor;
+                                      colorValue = coverColor;
                                     }
 
                                     // board type logic
                                     if (selectedPage! == "Notes Lover" ||
                                         selectedPage! == "A4 Premium") {
                                       boardType = "SBS/WB/270";
+                                      sizeOfPage = "5040";
+                                      boardPrice = "5";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Yuva Spiral" ||
                                         selectedPage! == "Yuva") {
                                       boardType = "Duplex/WB/A4/250";
                                       boardvalue = boardType;
+                                      sizeOfPage = "5040";
+                                      boardPrice = "2.60";
                                     } else if (selectedPage! == "Sawera" ||
                                         selectedPage! == "Sawera Spiral") {
                                       boardType = "Bahal/GB/190";
+                                      sizeOfPage = "4212";
                                       boardvalue = boardType;
+                                      boardPrice = "2.10";
                                     } else if (selectedPage! ==
                                             "Oblong Spiral" ||
                                         selectedPage! == "Oblong") {
                                       boardType = "Duplex/WB/OB/250";
+                                      sizeOfPage = "3795";
+                                      boardPrice = "3.50";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "A5/DC" ||
                                         selectedPage! == "A5/DC Sprial") {
                                       boardType = "SBS/WB/250";
+                                      sizeOfPage = "3626";
+                                      boardPrice = "3.10";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "RangRiti" ||
                                         selectedPage! == "Rangriti Spiral") {
                                       boardType = "Duplex/WB/RR/250";
+                                      sizeOfPage = "6528 ";
+                                      boardPrice = "3.50";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Star Kid") {
                                       boardType = "Duplex/WB/A5/250";
+                                      sizeOfPage = "3626";
+                                      boardPrice = "2.60";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Saptrishi") {
                                       boardType = "GB/NL/A5";
+                                      sizeOfPage = "3626";
+                                      boardPrice = "1.10";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Crown") {
                                       boardType = "Duplex/GB/230";
+                                      sizeOfPage = "3220";
+                                      boardPrice = "2.40";
                                       boardvalue = boardType;
-                                    } else if (selectedPage! == "Crown 10") {
+                                    } else if (selectedPage! == "Prime") {
                                       boardType = "Board/GB/180";
+                                      sizeOfPage = "3220";
+                                      boardPrice = "1.50";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Mogli") {
                                       boardType = "GB/NL/CR";
+                                      sizeOfPage = "3220";
+                                      boardPrice = "0.60";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Practical") {
                                       boardType = "Duplex/WB/PT/250";
+                                      sizeOfPage = "5104";
+                                      boardPrice = "4.50";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Mogli 10") {
                                       boardType = "GB/CR 180";
+                                      sizeOfPage = "3220";
+                                      boardPrice = "1";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Scrape Book") {
                                       boardType = "Comming soon..";
+                                      sizeOfPage = "5040";
+                                      // boardValue=""
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Creater") {
                                       boardType = "Duplex/WB/A4/250";
+                                      sizeOfPage = "5040";
+                                      boardPrice = "2.60";
                                       boardvalue = boardType;
                                     } else if (selectedPage! == "Sawera") {
                                       boardType = "Bahal/GB/190";
+                                      sizeOfPage = "4212";
+                                      boardPrice = "2.10";
                                       boardvalue = boardType;
                                     } else {
                                       boardType = "Select a board";
@@ -395,7 +434,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                 : (val) {
                                   setState(() {
                                     selectedPaper = val;
-                                    pagevalue = selectedPaper!["name"];
+                                    pagevalue = selectedPaper!["value"];
 
                                     print(
                                       'Selected Paper: ${selectedPaper!["name"]}, Price: ${selectedPaper!["value"]}',
@@ -431,10 +470,8 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               );
                             }).toList(),
                         onChanged: (NoOfPageModel? newValueNoPage) {
-                         
                           setState(() {
                             selectedNoOfPage = newValueNoPage;
-                            
                           });
                         },
                         decoration: InputDecoration(
@@ -448,19 +485,19 @@ class _DeshboardPageState extends State<DeshboardPage> {
                       SizedBox(height: 15),
 
                       Text(
-                    articlevalue == null
-                    ? "No value selected"
-                    : modelvalue == null
-                    ? "No value selected"
-                    : colorValue == null
-                    ? "No value selected"
-                    : boardvalue == null
-                    ? "No value selected"
-                    : pagevalue == null
-                    ? "No value selected"
-                    : selectedNoOfPage == null
-                    ? "No value selected"
-                    : "You selected: ${articlevalue!} , ${modelvalue!}, ${colorValue!}, ${boardvalue!}, ${pagevalue!}, ${selectedNoOfPage!.name}",
+                        articlevalue == null
+                            ? "No value selected"
+                            : sizeOfPage == null
+                            ? "No value selected"
+                            : colorValue == null
+                            ? "No value selected"
+                            : boardPrice == null
+                            ? "No value selected"
+                            : pagevalue == null
+                            ? "No value selected"
+                            : selectedNoOfPage == null
+                            ? "No value selected"
+                            : "You selected: ${articlevalue!} , ${sizeOfPage!}, ${colorValue!}, ${boardPrice!}, ${pagevalue!}, ${selectedNoOfPage!.name}",
                         style: TextStyle(fontSize: 16),
                       ),
                       SizedBox(height: 25),
@@ -468,7 +505,12 @@ class _DeshboardPageState extends State<DeshboardPage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                                selectedNoOfPage == null || articlevalue.isEmpty || modelvalue.isEmpty || colorValue.isEmpty || boardvalue.isEmpty || pagevalue.isEmpty
+                                selectedNoOfPage == null ||
+                                        articlevalue.isEmpty ||
+                                        modelvalue.isEmpty ||
+                                        colorValue.isEmpty ||
+                                        boardvalue.isEmpty ||
+                                        pagevalue.isEmpty
                                     ? Colors
                                         .grey // disabled color
                                     : Colors.pinkAccent,
@@ -477,10 +519,20 @@ class _DeshboardPageState extends State<DeshboardPage> {
                             ),
                           ),
                           onPressed:
-                              selectedNoOfPage == null || articlevalue.isEmpty || modelvalue.isEmpty || colorValue.isEmpty || boardvalue.isEmpty || pagevalue.isEmpty
+                              selectedNoOfPage == null ||
+                                      articlevalue.isEmpty ||
+                                      modelvalue.isEmpty ||
+                                      colorValue.isEmpty ||
+                                      boardvalue.isEmpty ||
+                                      pagevalue.isEmpty
                                   ? null // 🚫 button disabled
                                   : () {
-                                    _multiply(articlevalue, modelvalue, colorValue, boardvalue, pagevalue, selectedNoOfPage);
+                                    _multiply(
+                                      sizeOfPage,
+                                      boardPrice,
+                                      pagevalue,
+                                      selectedNoOfPage,
+                                    );
 
                                     ScaffoldMessenger.of(
                                       context,
@@ -504,7 +556,32 @@ class _DeshboardPageState extends State<DeshboardPage> {
     );
   }
 
-  void _multiply(String? articlevalue, String? modelvalue, String? colorValue, String? boardvalue, String? pagevalue, NoOfPageModel? selectedNoOfPage) {
-    print("Result: $articlevalue,$modelvalue,$colorValue,$boardvalue,$pagevalue,${selectedNoOfPage!.value}"); 
+  void _multiply(
+    String sizeOfPage,
+    String boardPrice,
+    final pagevalue,
+    NoOfPageModel? selectedNoOfPage,
+  ) {
+    final divRW = double.tryParse('20000'.toString()) ?? 1;
+    final divPageRate = double.tryParse('8000'.toString()) ?? 1;
+    final stPageType = double.tryParse("49".toString()) ?? 1;
+    final sizeOfPageDouble = double.tryParse(sizeOfPage) ?? 0;
+    final pagevalueDouble = double.tryParse(pagevalue.toString()) ?? 0;
+
+    final selectedNoOfPageValue = selectedNoOfPage!.value;
+
+    // print(
+    //   "Result: $sizeOfPage,$boardPrice,$pagevalue,${selectedNoOfPage!.value}",
+    // );
+
+    final boardPriceDouble = double.tryParse(boardPrice) ?? 0;
+    final finalResult = ((((sizeOfPageDouble * pagevalueDouble / divRW) * stPageType / divPageRate) * selectedNoOfPageValue) + boardPriceDouble + 0.75) * (100 + 18) / 100;
+    // _result = 'Result: $finalResult';
+
+    print("Final Result: $finalResult");
   }
+
+  // void _multiply(String? articlevalue, String? modelvalue, String? colorValue, String? boardvalue, String? pagevalue, NoOfPageModel? selectedNoOfPage) {
+  //   print("Result: $articlevalue,$modelvalue,$colorValue,$boardvalue,$pagevalue,${selectedNoOfPage!.value}");
+  // }
 }
