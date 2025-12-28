@@ -59,16 +59,13 @@ class CalculatorRepository {
     return jsonResponse.map((item) => CoverBoard.fromJson(item)).toList();
   }
 
-
-
-  // // Load JSON data from assets assets/page.json
+  // // // Load JSON data from assets assets/page.json
   Future<List<PageType>> pageMTypeAsset() async {
     final String jsonString = await rootBundle.loadString('assets/page.json');
     final List<dynamic> jsonResponse = json.decode(jsonString);
+   
     return jsonResponse.map((item) => PageType.fromJson(item)).toList();
   }
-
-
   // // Load JSON data from assets assets/noPage.json
   Future<List<NoOfPageModel>> loadNoofPageAsset() async {
     final String jsonString = await rootBundle.loadString('assets/noPage.json');

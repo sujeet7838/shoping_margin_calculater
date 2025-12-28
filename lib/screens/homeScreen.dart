@@ -10,6 +10,7 @@ import 'package:calculater/utils/SnackbarUtils.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+   //final String pageKey;
   const HomeScreen({super.key});
 
   @override
@@ -38,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   CoverBoard? selectedBoard;
   PageType? selectedPageM;
   NoOfPageModel? selectedNoOfPage;
-
   List<CoverModel> coverType = [];
   CoverModel? selectedCoverType;
 
@@ -52,8 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
     coverBoard = await CalculatorRepository().boardCoverTypeAsset();
     pageM = await CalculatorRepository().pageMTypeAsset();
     noOfPage = await CalculatorRepository().loadNoofPageAsset();
+     //final pages = await loadPages();
+    setState(() {
+      
+    });
     setState(() {});
   }
+ 
 
   @override
   void initState() {
@@ -193,6 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             if (value!.name == "Notes Lover" ||
                                 value!.name == "A4 Primum") {
                               boardType = "SBS/WB/270";
+                           
                             } else if (value!.name == "Youva Spiral" ||
                                 value!.name == "Youva") {
                               boardType = "Duplex/WB/A4/250";
@@ -291,31 +297,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 15),
 
-              // DropdownButtonFormField<CoverBoard>(
-              //   value: selectedBoard,
-              //   hint: Text("Select a board"),
-              //   items:
-              //       coverBoard.map((coverValue) {
-              //         return DropdownMenuItem<CoverBoard>(
-              //           value: coverValue,
-              //           child: Padding(
-              //             padding: const EdgeInsets.only(left: 16.0),
-              //             child: Text(coverValue.name),
-              //           ),
-              //         );
-              //       }).toList(),
-              //   onChanged: (CoverBoard? newValueCover) {
-              //     setState(() {
-              //       selectedBoard = newValueCover;
-              //     });
-              //   },
-              //   decoration: InputDecoration(
-              //     //labelText: 'Cover',
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(20),
-              //     ),
-              //   ),
-              // ),
               TextField(
                 controller: TextEditingController(
                   text:
@@ -355,24 +336,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
               DropdownButtonFormField<PageType>(
                 value: selectedPageM,
-                hint: Text("Select a page"),
+                hint: Text("Select a page type"),
                 items:
-                    pageM.map((coverValue) {
+                    pageM.map((pageValue) {
                       return DropdownMenuItem<PageType>(
-                        value: coverValue,
+                        value: pageValue,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0),
-                          child: Text(coverValue.name),
+                          child: Text(pageValue.name),
                         ),
                       );
                     }).toList(),
-                onChanged: (PageType? newValueCover) {
+                onChanged: (PageType? newValuePage) {
                   setState(() {
-                    selectedPageM = newValueCover;
+                    selectedPageM = newValuePage;
                   });
                 },
                 decoration: InputDecoration(
-                  //labelText: 'Cover',
+                  // labelText: 'Page type',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -424,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 selectedboundTypePage == null &&
                         selectedCover == null &&
                         selectedBoard == null &&
-                        selectedPageM == null &&
+                        //selectedPageM == null &&
                         selectedNoOfPage == null
                     ? "No value selected"
                     : selectedboundTypePage == null
@@ -432,12 +413,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     : selectedCover == null
                     ? "No value selected"
                     : selectedBoard == null
-                    ? "No value selected"
-                    : selectedPageM == null
+                  //  ? "No value selected"
+                   // : selectedPageM == null
                     ? "No value selected"
                     : selectedNoOfPage == null
                     ? "No value selected"
-                    : "You selected: ${selectedboundTypePage!.value} , ${selectedCover!.name}, ${selectedBoard!.value}, ${selectedPageM!.value},${selectedNoOfPage!.value}",
+                    : "You selected: ${selectedboundTypePage!.value} , ${selectedCover!.name}, ${selectedBoard!.value}, },${selectedNoOfPage!.value}",
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 25),
@@ -455,11 +436,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       selectedboundTypePage,
                       selectedModelPage,
                       selectedCover,
-                      selectedBoard,
+                      selectedBoard
 
-                      selectedPageM,
-                      selectedNoOfPage,
-                      selectedCoverType,
+                   
                     );
 
                     ScaffoldMessenger.of(
@@ -490,9 +469,9 @@ class _HomeScreenState extends State<HomeScreen> {
     CoverModel? selectedCover,
     CoverBoard? selectedBoard,
 
-    PageType? selectedPageM,
-    NoOfPageModel? selectedNoOfPage,
-    CoverModel? selectedCoverType,
+    // PageType? selectedPageM,
+    // NoOfPageModel? selectedNoOfPage,
+    // CoverModel? selectedCoverType,
   ) {
     final stPageSize = double.tryParse(selectedboundTypePage!.value.toString());
     // final stGsm = double.tryParse(selectedquality!.name.toString());

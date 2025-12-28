@@ -1,0 +1,109 @@
+{
+  "pages": {
+    "Notes Lover": [
+      { "id": 3, "name": "Malyscian/58", "value": "58", "type":  "Sprial Bound" }
+    ],
+    "Yuva Spiral": [
+      { "id": 12, "name": "Silver/54", "value": "54" , "type":  "Sprial Bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Sprial Bound"}
+    ],
+
+    "Sawera Spiral": [
+      { "id": 9, "name": "Century/56", "value": "56", "type":  "Sprial Bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" ,"type":  "Sprial Bound"},
+      { "id": 14, "name": "Indra Gold/54", "value": "54", "type":  "Sprial Bound"}
+    ],
+
+    "Oblong Spiral": [
+      { "id": 3, "name": "Malyscian/58", "value": "58" ,"type":  "Sprial Bound" }
+    ],
+
+    "Rangriti Spiral": [
+      { "id": 0, "name": "Board Paper/100", "value": "100" , "type":  "Sprial Bound"}
+    ],
+
+    "A4 Premium": [
+      { "id": 3, "name": "Malyscian/58", "value": "58" , "type": "Staple bound"},
+      { "id": 4, "name": "East Cost/58", "value": "58" , "type": "Staple bound"},
+      { "id": 7, "name": "Century Classic/57", "value": "57" , "type": "Staple bound"},
+      { "id": 8, "name": "Nani/57", "value": "57" , "type": "Staple bound"},
+      { "id": 10, "name": "ABC/56", "value": "56" , "type": "Staple bound"}
+    ],
+
+    "Yuva": [
+      { "id": 12, "name": "Silver/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 8, "name": "Nani/57", "value": "57" , "type":  "Staple bound" }
+    ],
+
+    "Sawera": [
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 14, "name": "Indra Gold/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 14, "name": "Indra Gold/54", "value": "54" , "type":  "Glu Bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Glu Bound"}
+    ],
+
+    "Oblong": [
+      { "id": 3, "name": "Malyscian/58", "value": "58" , "type":  "Staple bound"}
+    ],
+
+    "A5/DC": [
+      { "id": 3, "name": "Malyscian/58", "value": "58" , "type":  "Staple bound"},
+      { "id": 5, "name": "JK/58", "value": "58" , "type":  "Staple bound"},
+      { "id": 4, "name": "East Cost/58", "value": "58" , "type":  "Staple bound"},
+      { "id": 7, "name": "Century Classic/57", "value": "57" , "type":  "Staple bound"},
+      { "id": 8, "name": "Nani/57", "value": "57" , "type":  "Staple bound"}
+    ],
+
+    "Star Kid": [
+      { "id": 3, "name": "Malyscian/58", "value": "58" , "type":  "Staple bound"},
+      { "id": 11, "name": "Century/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 4, "name": "East Cost/58", "value": "58" , "type":  "Staple bound"},
+      { "id": 7, "name": "Century Classic/57", "value": "57" , "type":  "Staple bound"},
+      { "id": 8, "name": "Nani/57", "value": "57" , "type":  "Staple bound"}
+    ],
+
+    "Crown": [
+      { "id": 9, "name": "Century/56", "value": "56" , "type":  "Staple bound"},
+      { "id": 12, "name": "Silver/54", "value": "54" , "type":  "Staple bound" },
+      { "id": 10, "name": "ABC/56", "value": "56" , "type":  "Staple bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Staple bound"}
+    ],
+
+    "Prime": [
+      { "id": 16, "name": "DT/52", "value": "52" , "type":  "Staple bound"},
+      { "id": 12, "name": "Silver/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 10, "name": "ABC/56", "value": "56" , "type":  "Staple bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Staple bound"}
+    ],
+
+    "Mogli": [
+      { "id": 16, "name": "DT/52", "value": "52" , "type":  "Staple bound"},
+      { "id": 12, "name": "Silver/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 10, "name": "ABC/56", "value": "56" , "type":  "Staple bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 14, "name": "Indra Gold/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 17, "name": "Indra Gold/48", "value": "48" , "type":  "Staple bound"}
+    ],
+      "Mogli 10": [
+      { "id": 16, "name": "DT/52", "value": "52" , "type":  "Staple bound"},
+      { "id": 12, "name": "Silver/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 10, "name": "ABC/56", "value": "56" , "type":  "Staple bound"},
+      { "id": 13, "name": "Indra Plt/54", "value": "54" , "type":  "Staple bound"}
+      
+    ],
+
+    "Practical": [
+      { "id": 2, "name": "Pratical Paper/80", "value": "80" , "type":  "Staple bound"}
+    ],
+
+    "RangRiti": [
+      { "id": 0, "name": "Board Paper/100", "value": "100" , "type":  "Staple bound"}
+    ],
+    
+    "Creater": [
+      { "id": 6, "name": "Export Gold/58", "value": "58" , "type":  "Glu Bound"}
+    ]
+   
+  }
+}

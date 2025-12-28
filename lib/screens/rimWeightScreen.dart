@@ -202,28 +202,28 @@ class _RimWeightScreenState extends State<RimWeightScreen> {
                 ),
               ),
               SizedBox(height: 15),
-              DropdownButtonFormField<PageType>(
-                value: selectedPageType,
-                hint: Text("Select a page type"),
-                items:
-                    pageType.map((pageTypeValue) {
-                      return DropdownMenuItem<PageType>(
-                        value: pageTypeValue,
-                        child: Text(pageTypeValue.name),
-                      );
-                    }).toList(),
-                onChanged: (PageType? newValuePageType) {
-                  setState(() {
-                    selectedPageType = newValuePageType;
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'Page type',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
+              // DropdownButtonFormField<PageType>(
+              //   value: selectedPageType,
+              //   hint: Text("Select a page type"),
+              //   items:
+              //       pageType.map((pageTypeValue) {
+              //         return DropdownMenuItem<PageType>(
+              //           value: pageTypeValue,
+              //           child: Text(pageTypeValue.name),
+              //         );
+              //       }).toList(),
+              //   onChanged: (PageType? newValuePageType) {
+              //     setState(() {
+              //       selectedPageType = newValuePageType;
+              //     });
+              //   },
+              //   decoration: InputDecoration(
+              //     labelText: 'Page type',
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(20),
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 15),
               Text(
                 "No of page",
@@ -304,7 +304,7 @@ class _RimWeightScreenState extends State<RimWeightScreen> {
                     ? "No value selected"
                     : selectedPageType == null
                     ? "No value selected"
-                    : "You selected: ${selectedPageSize!.value} , ${selectedGsmmodel!.name}, ${selectedPageType!.value}",
+                    : "You selected: ${selectedPageSize!.value} , ${selectedGsmmodel!.name}, }",
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 15),
@@ -350,20 +350,20 @@ class _RimWeightScreenState extends State<RimWeightScreen> {
     final stPageSize = double.tryParse(selectedPageSize!.value.toString());
     final stGsm = double.tryParse(selectedGsmmodel!.name.toString());
     final divRW = double.tryParse('20000'.toString());
-    final stPageType = double.tryParse(selectedPageType!.value.toString());
+    //final stPageType = double.tryParse(selectedPageType!.value.toString());
     final divPageRate = double.tryParse('8000'.toString());
 
     if (stPageSize != null &&
         stGsm != null &&
         divRW != null &&
-        stPageType != null &&
+       // stPageType != null &&
         divPageRate != null) {
       //   setState(() {
       //   _result = 'Result: ${(num1 * num2) / num3!}';
       // });
       setState(() {
-        _result =
-            'Result:  ${(((stPageSize * stGsm) / divRW) * stPageType) / divPageRate}';
+        // _result =
+        //     'Result:  ${(((stPageSize * stGsm) / divRW) * stPageType) / divPageRate}';
       });
     } else {
       setState(() {

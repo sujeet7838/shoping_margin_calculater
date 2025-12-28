@@ -1,3 +1,4 @@
+import 'package:calculater/screens/dashboard.dart';
 import 'package:calculater/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Calculater App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomeScreen(),
+      home: DeshboardPage(),
     );
   }
 }
