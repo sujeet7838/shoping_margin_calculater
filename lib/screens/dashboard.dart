@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:calculater/model/noOfPage.dart';
 import 'package:calculater/repositeries/calculator_repo.dart';
-import 'package:calculater/utils/SnackbarUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,14 +24,13 @@ class _DeshboardPageState extends State<DeshboardPage> {
   String pagevalue = '';
   String noofpagevalue = '';
   String bindingvalue = '';
-  String result = '';
 
   // size of page value
   String sizeOfPage = '';
 
   // board Value
   String boardPrice = '';
-   final finalResult = '';
+  String finalResult = '';
 
   /// ------------------ STATIC DROPDOWN 1 ------------------
   final List<String> bindingTypes =
@@ -75,7 +73,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
   }
 
   /// ------------------ LOGIC ------------------
-
   void onTypeChanged(String? value) {
     selectedType = value;
     selectedPage = null;
@@ -103,8 +100,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
     setState(() {});
   }
 
-  /// ------------------ UI ------------------
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,8 +125,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Dropdown 1 – Binding Type
-                      ///               SizedBox(height: 15),
                       Text(
                         "Article",
                         style: TextStyle(
@@ -142,7 +135,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
 
                       DropdownButtonFormField<String>(
                         isExpanded: true,
@@ -166,12 +159,11 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           setState(() {
                             onTypeChanged(value);
                             articlevalue = value!;
-                            print('Selected Type: $value.value');
                           });
                         },
                       ),
 
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
 
                       Text(
                         "Model",
@@ -183,9 +175,8 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
 
-                      /// Dropdown 2 – Page
                       DropdownButtonFormField<String>(
                         hint: Text("Select a model"),
                         decoration: InputDecoration(
@@ -210,7 +201,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                   setState(() {
                                     onPageChanged(val);
                                     modelvalue = val!;
-                                    print('Selected Page: $selectedPage');
 
                                     if (selectedPage! == "A5/DC" ||
                                         selectedPage == "Crown") {
@@ -319,7 +309,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                   });
                                 },
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Text(
                         "Cover",
                         style: TextStyle(
@@ -330,7 +320,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
 
                       TextField(
                         controller: TextEditingController(
@@ -358,7 +348,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                         ),
                       ),
 
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Text(
                         "Board",
                         style: TextStyle(
@@ -369,7 +359,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
 
                       TextField(
                         controller: TextEditingController(
@@ -397,7 +387,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                         ),
                       ),
 
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Text(
                         "Page",
                         style: TextStyle(
@@ -435,15 +425,11 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                   setState(() {
                                     selectedPaper = val;
                                     pagevalue = selectedPaper!["value"];
-
-                                    print(
-                                      'Selected Paper: ${selectedPaper!["name"]}, Price: ${selectedPaper!["value"]}',
-                                    );
                                   });
                                 },
                       ),
 
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Text(
                         "No of Page",
                         style: TextStyle(
@@ -475,7 +461,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           });
                         },
                         decoration: InputDecoration(
-                          // labelText: 'No of page',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -484,23 +469,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
 
                       SizedBox(height: 15),
 
-                      Text(
-                        articlevalue == null
-                            ? "No value selected"
-                            : sizeOfPage == null
-                            ? "No value selected"
-                            : colorValue == null
-                            ? "No value selected"
-                            : boardPrice == null
-                            ? "No value selected"
-                            : pagevalue == null
-                            ? "No value selected"
-                            : selectedNoOfPage == null
-                            ? "No value selected"
-                            : "You selected: ${articlevalue!} , ${sizeOfPage!}, ${colorValue!}, ${boardPrice!}, ${pagevalue!}, ${selectedNoOfPage!.name}",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 25),
                       Center(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -533,10 +501,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                       pagevalue,
                                       selectedNoOfPage,
                                     );
-
-                                    ScaffoldMessenger.of(
-                                      context,
-                                    ).showSnackBar(SnackbarUtils().snackBar);
                                   },
                           child: const Text(
                             'Calculate',
@@ -546,6 +510,15 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               color: Colors.white,
                             ),
                           ),
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      Text(
+                        'Result : $finalResult',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
                       SizedBox(height: 25),
@@ -567,21 +540,20 @@ class _DeshboardPageState extends State<DeshboardPage> {
     final stPageType = double.tryParse("49".toString()) ?? 1;
     final sizeOfPageDouble = double.tryParse(sizeOfPage) ?? 0;
     final pagevalueDouble = double.tryParse(pagevalue.toString()) ?? 0;
-
     final selectedNoOfPageValue = selectedNoOfPage!.value;
-
-    // print(
-    //   "Result: $sizeOfPage,$boardPrice,$pagevalue,${selectedNoOfPage!.value}",
-    // );
-
     final boardPriceDouble = double.tryParse(boardPrice) ?? 0;
-    final finalResult = ((((sizeOfPageDouble * pagevalueDouble / divRW) * stPageType / divPageRate) * selectedNoOfPageValue) + boardPriceDouble + 0.75) * (100 + 18) / 100;
-    // _result = 'Result: $finalResult';
+    final rimWeght = sizeOfPageDouble * pagevalueDouble / divRW;
+    final riwPrice = rimWeght;
+    setState(() {
+      finalResult = ((((riwPrice * stPageType / divPageRate) *
+                      selectedNoOfPageValue) +
+                  boardPriceDouble +
+                  0.75) *
+              (100 + 18) /
+              100)
+          .toStringAsFixed(1);
+    });
 
     print("Final Result: $finalResult");
   }
-
-  // void _multiply(String? articlevalue, String? modelvalue, String? colorValue, String? boardvalue, String? pagevalue, NoOfPageModel? selectedNoOfPage) {
-  //   print("Result: $articlevalue,$modelvalue,$colorValue,$boardvalue,$pagevalue,${selectedNoOfPage!.value}");
-  // }
 }
