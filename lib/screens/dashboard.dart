@@ -522,6 +522,14 @@ class _DeshboardPageState extends State<DeshboardPage> {
                         ),
                       ),
                       SizedBox(height: 25),
+                         Text(
+                        '',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
                     ],
                   ),
                 ),
