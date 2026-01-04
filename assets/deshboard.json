@@ -93,6 +93,12 @@
       
     ],
 
+      "Saptrishi": [
+      { "id": 14, "name": "Indra Gold/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 17, "name": "Indra Gold/48", "value": "48" , "type":  "Staple bound"}
+    ],
+
+
     "Practical": [
       { "id": 2, "name": "Pratical Paper/80", "value": "80" , "type":  "Staple bound"}
     ],

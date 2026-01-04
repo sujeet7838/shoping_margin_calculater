@@ -31,6 +31,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
   // board Value
   String boardPrice = '';
   String finalResult = '';
+  double finalResultRounded = 0.0;
 
   /// ------------------ STATIC DROPDOWN 1 ------------------
   final List<String> bindingTypes =
@@ -287,6 +288,11 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                       sizeOfPage = "3220";
                                       boardPrice = "1";
                                       boardvalue = boardType;
+                                    } else if (selectedPage! == "Saptrishi") {
+                                      boardType = "GB/NL/A5";
+                                      sizeOfPage = "3626";
+                                      boardPrice = "1.10";
+                                      boardvalue = boardType;
                                     } else if (selectedPage! == "Scrape Book") {
                                       boardType = "Comming soon..";
                                       sizeOfPage = "5040";
@@ -514,7 +520,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                       ),
                       SizedBox(height: 25),
                       Text(
-                        'Result : $finalResult',
+                        'Result : $finalResultRounded',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -522,7 +528,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                         ),
                       ),
                       SizedBox(height: 25),
-                         Text(
+                      Text(
                         '',
                         style: TextStyle(
                           fontSize: 20,
@@ -552,16 +558,20 @@ class _DeshboardPageState extends State<DeshboardPage> {
     final boardPriceDouble = double.tryParse(boardPrice) ?? 0;
     final rimWeght = sizeOfPageDouble * pagevalueDouble / divRW;
     final riwPrice = rimWeght;
+    double value = double.parse(riwPrice.toString());
+    double result = (value * 10).round() / 10;
+
     setState(() {
-      finalResult = ((((riwPrice * stPageType / divPageRate) *
+      finalResult = ((((result * stPageType / divPageRate) *
                       selectedNoOfPageValue) +
                   boardPriceDouble +
                   0.75) *
               (100 + 18) /
               100)
-          .toStringAsFixed(1);
-    });
+          .toStringAsFixed(3);
 
-    print("Final Result: $finalResult");
+      double finalValue = double.parse(finalResult);
+      finalResultRounded = (finalValue * 10).ceil() / 10;
+    });
   }
 }
