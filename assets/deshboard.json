@@ -15,7 +15,7 @@
     ],
 
     "Oblong Spiral": [
-      { "id": 3, "name": "Malyscian/58", "value": "58" ,"type":  "Sprial Bound" }
+      { "id": 3, "name": "Malyscian/58", "value": "58" , "type":  "Sprial Bound" }
     ],
 
     "Rangriti Spiral": [
@@ -57,7 +57,7 @@
 
     "Star Kid": [
       { "id": 3, "name": "Malyscian/58", "value": "58" , "type":  "Staple bound"},
-      { "id": 11, "name": "Century/54", "value": "54" , "type":  "Staple bound"},
+      { "id": 11, "name": "Century/56", "value": "56" , "type":  "Staple bound"},
       { "id": 4, "name": "East Cost/58", "value": "58" , "type":  "Staple bound"},
       { "id": 7, "name": "Century Classic/57", "value": "57" , "type":  "Staple bound"},
       { "id": 8, "name": "Nani/57", "value": "57" , "type":  "Staple bound"}

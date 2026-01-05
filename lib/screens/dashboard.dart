@@ -22,8 +22,10 @@ class _DeshboardPageState extends State<DeshboardPage> {
   String colorValue = '';
   String boardvalue = '';
   String pagevalue = '';
+  String pageRate = '';
   String noofpagevalue = '';
   String bindingvalue = '';
+  String labourCost = '';
 
   // size of page value
   String sizeOfPage = '';
@@ -160,6 +162,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           setState(() {
                             onTypeChanged(value);
                             articlevalue = value!;
+                            print("article value $articlevalue");
                           });
                         },
                       ),
@@ -431,6 +434,46 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                   setState(() {
                                     selectedPaper = val;
                                     pagevalue = selectedPaper!["value"];
+
+                                    if (selectedPaper!["name"]! ==
+                                        "Malyscian/58") {
+                                      pageRate = "88.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "East Cost/58") {
+                                      pageRate = "92.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "JK/58") {
+                                      pageRate = "92.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "Century Classic/57") {
+                                      pageRate = "97.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "Nani/57") {
+                                      pageRate = "82.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "Century/56") {
+                                      pageRate = "94.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "ABC/56") {
+                                      pageRate = "84.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "Silver/54") {
+                                      pageRate = "74.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "Indra Plt/54") {
+                                      pageRate = "62.50";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "Indra Gold/54") {
+                                      pageRate = "49.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "DT/52") {
+                                      pageRate = "58.00";
+                                    } else if (selectedPaper!["name"]! ==
+                                        "Indra Gold/48") {
+                                      pageRate = "51.00";
+                                    } else {
+                                      pageRate = "Select a page rate";
+                                    }
                                   });
                                 },
                       ),
@@ -464,6 +507,41 @@ class _DeshboardPageState extends State<DeshboardPage> {
                         onChanged: (NoOfPageModel? newValueNoPage) {
                           setState(() {
                             selectedNoOfPage = newValueNoPage;
+
+                            if (articlevalue == "Sprial Bound") {
+                                //labourCost "Sprial Bound
+                               print("articlevalue $articlevalue");
+                            } else if (articlevalue == "Staple bound") {
+                              //labourCost Staple bound
+                              if (selectedNoOfPage!.name == "2") {
+                                labourCost = "";
+                              } else if (int.parse(selectedNoOfPage!.name) >=
+                                      8 &&
+                                  int.parse(selectedNoOfPage!.name) <= 60) {
+                                labourCost = "0.35";
+                              } else if (int.parse(selectedNoOfPage!.name) >=
+                                      64 &&
+                                  int.parse(selectedNoOfPage!.name) <= 96) {
+                                labourCost = "0.45";
+                              } else if (int.parse(selectedNoOfPage!.name) >=
+                                      100 &&
+                                  int.parse(selectedNoOfPage!.name) <= 300) {
+                                final lbrcost =
+                                    0.70 /
+                                    120 *
+                                    int.parse(selectedNoOfPage!.name);
+
+                                // labourCost = ((lbrcost * 10).ceil() / 10).toStringAsFixed(2);
+
+                                labourCost = lbrcost.toStringAsFixed(3);
+                                print("lbrcost $labourCost");
+                              } else {
+                                labourCost = "0";
+                              }
+                            } else if (articlevalue == "Glu Bound") {
+                                 //labourCost "Glu Bound
+                                 print("articlevalue $articlevalue");
+                            }
                           });
                         },
                         decoration: InputDecoration(
@@ -505,6 +583,8 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                       sizeOfPage,
                                       boardPrice,
                                       pagevalue,
+                                      pageRate,
+                                      labourCost,
                                       selectedNoOfPage,
                                     );
                                   },
@@ -547,11 +627,14 @@ class _DeshboardPageState extends State<DeshboardPage> {
     String sizeOfPage,
     String boardPrice,
     final pagevalue,
+    String pageRate,
+    String labourCost,
     NoOfPageModel? selectedNoOfPage,
   ) {
     final divRW = double.tryParse('20000'.toString()) ?? 1;
     final divPageRate = double.tryParse('8000'.toString()) ?? 1;
-    final stPageType = double.tryParse("49".toString()) ?? 1;
+    // final stPageType = double.tryParse("49".toString()) ?? 1;
+    final stPageType = double.tryParse(pageRate.toString()) ?? 1;
     final sizeOfPageDouble = double.tryParse(sizeOfPage) ?? 0;
     final pagevalueDouble = double.tryParse(pagevalue.toString()) ?? 0;
     final selectedNoOfPageValue = selectedNoOfPage!.value;
@@ -562,10 +645,21 @@ class _DeshboardPageState extends State<DeshboardPage> {
     double result = (value * 10).round() / 10;
 
     setState(() {
+      // finalResult = ((((result * stPageType / divPageRate) *
+      //                 selectedNoOfPageValue) +
+      //             boardPriceDouble +
+      //             0.75) *
+      //         (100 + 18) /
+      //         100)
+      //     .toStringAsFixed(3);
+
+      // double finalValue = double.parse(finalResult);
+      // finalResultRounded = (finalValue * 10).ceil() / 10;
+      final labourCostDouble = double.tryParse(labourCost) ?? 0;
       finalResult = ((((result * stPageType / divPageRate) *
                       selectedNoOfPageValue) +
                   boardPriceDouble +
-                  0.75) *
+                  labourCostDouble) *
               (100 + 18) /
               100)
           .toStringAsFixed(3);
