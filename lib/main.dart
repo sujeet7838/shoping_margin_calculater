@@ -1,5 +1,5 @@
 import 'package:calculater/screens/dashboard.dart';
-import 'package:calculater/screens/homeScreen.dart';
+import 'package:calculater/screens/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
