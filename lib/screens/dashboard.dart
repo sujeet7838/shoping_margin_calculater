@@ -515,27 +515,27 @@ class _DeshboardPageState extends State<DeshboardPage> {
 
                             if (articlevalue == "Sprial Bound") {
                               //labourCost "Sprial Bound
-                              if (int.parse(selectedNoOfPage!.name) >= 0 &&
+                              if (int.parse(selectedNoOfPage!.name) >= 8 &&
                                   int.parse(selectedNoOfPage!.name) <= 100) {
-                                final lbrcost = "4.00";
+                                final lbrcost = 2.50;
                                 labourCost = double.parse(
                                   (springCost +
                                           panniCost +
                                           packingCost +
-                                          double.parse(lbrcost))
+                                          lbrcost)
                                       .toString(),
                                 ).toStringAsFixed(2);
 
-                                print("labourCostnnnnnnn"+labourCost);
+                               // print("labourCostnnnnnnn"+labourCost);
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       104 &&
-                                  int.parse(selectedNoOfPage!.name) <= 300) {
-                                // final lbrcost = "5.00";
-                                final lbrcost =
-                                    1.6 /
-                                    120 *
-                                    int.parse(selectedNoOfPage!.name);
-                                    print(" Labour Cost Double: $lbrcost");
+                                  int.parse(selectedNoOfPage!.name) <= 148) {
+                                 final lbrcost = 3.00;
+                                // final lbrcost =
+                                //     1.6 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
+                                //     print(" Labour Cost Double: $lbrcost");
                                 labourCost = double.parse(
                                   (springCost +
                                           panniCost +
@@ -546,13 +546,73 @@ class _DeshboardPageState extends State<DeshboardPage> {
 
                                  print("labourCostnnnnnnn...."+labourCost);
                               } else if (int.parse(selectedNoOfPage!.name) >=
+                                      152 &&
+                                  int.parse(selectedNoOfPage!.name) <= 200) {
+                                final lbrcost = 3.25;
+                                // final lbrcost =
+                                //     1.5 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
+                                labourCost = double.parse(
+                                  (springCost +
+                                          panniCost +
+                                          packingCost +
+                                          lbrcost)
+                                      .toString(),
+                                ).toStringAsFixed(2);
+                              } else if (int.parse(selectedNoOfPage!.name) >=
+                                      204 &&
+                                  int.parse(selectedNoOfPage!.name) <= 252) {
+                                  final lbrcost = 3.50;
+                                // final lbrcost =
+                                //     1.5 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
+                                labourCost = double.parse(
+                                  (springCost +
+                                          panniCost +
+                                          packingCost +
+                                          lbrcost)
+                                      .toString(),
+                                ).toStringAsFixed(2);
+                              }else if (int.parse(selectedNoOfPage!.name) >=
+                                      256 &&
+                                  int.parse(selectedNoOfPage!.name) <= 300) {
+                                  final lbrcost = 4.00;
+                                // final lbrcost =
+                                //     1.5 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
+                                labourCost = double.parse(
+                                  (springCost +
+                                          panniCost +
+                                          packingCost +
+                                          lbrcost)
+                                      .toString(),
+                                ).toStringAsFixed(2);
+                              } else if (int.parse(selectedNoOfPage!.name) >=
                                       304 &&
+                                  int.parse(selectedNoOfPage!.name) <= 352) {
+                                  final lbrcost = 4.50;
+                                // final lbrcost =
+                                //     1.5 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
+                                labourCost = double.parse(
+                                  (springCost +
+                                          panniCost +
+                                          packingCost +
+                                          lbrcost)
+                                      .toString(),
+                                ).toStringAsFixed(2);
+                              } else if (int.parse(selectedNoOfPage!.name) >=
+                                      356 &&
                                   int.parse(selectedNoOfPage!.name) <= 400) {
-                                // final lbrcost = "6.00";
-                                final lbrcost =
-                                    1.5 /
-                                    120 *
-                                    int.parse(selectedNoOfPage!.name);
+                                  final lbrcost = 5.00;
+                                // final lbrcost =
+                                //     1.5 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
                                 labourCost = double.parse(
                                   (springCost +
                                           panniCost +
@@ -562,12 +622,12 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                 ).toStringAsFixed(2);
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       404 &&
-                                  int.parse(selectedNoOfPage!.name) <= 500) {
-                                //  final lbrcost = "7.00";
-                                final lbrcost =
-                                    1.5 /
-                                    120 *
-                                    int.parse(selectedNoOfPage!.name);
+                                  int.parse(selectedNoOfPage!.name) <= 452) {
+                                  final lbrcost = 5.50;
+                                // final lbrcost =
+                                //     1.5 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
                                 labourCost = double.parse(
                                   (springCost +
                                           panniCost +
@@ -575,10 +635,24 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                           lbrcost)
                                       .toString(),
                                 ).toStringAsFixed(2);
-                              }
+                              } else if (int.parse(selectedNoOfPage!.name) >=
+                                      456 &&
+                                  int.parse(selectedNoOfPage!.name) <= 500) {
+                                  final lbrcost = 6.00;
+                                // final lbrcost =
+                                //     1.5 /
+                                //     120 *
+                                //     int.parse(selectedNoOfPage!.name);
+                                labourCost = double.parse(
+                                  (springCost +
+                                          panniCost +
+                                          packingCost +
+                                          lbrcost)
+                                      .toString(),
+                                ).toStringAsFixed(2);
+                              } 
 
-
-/////////////////////////////////////////////////////////////////////////
+               //////////////////////////////////////Sprial Bound///////////////////////////////////
 
 
                             } else if (articlevalue == "Staple bound") {
@@ -625,12 +699,14 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                     1.5 /
                                     120 *
                                     int.parse(selectedNoOfPage!.name);
-                                //  print("Labour Cost Double: $lbrcost");
-                                labourCost = (springCost +
-                                        panniCost +
-                                        packingCost +
+                                  print("Labour Cost Double: $lbrcost");
+                                labourCost = (0 +
+                                        0 +
+                                        0.50 +
                                         lbrcost)
                                     .toStringAsFixed(2);
+
+                                      print("labourCostLabour Cost Double: $labourCost");
                               }
                             }
                           });

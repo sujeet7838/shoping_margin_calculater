@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
-  static const routeName = '/LoginScreen';
+  //static const routeName = '/LoginScreen';
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -34,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isLoading = false;
   void _submitFormOnLogin() async {
+
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
@@ -48,15 +49,18 @@ class _LoginScreenState extends State<LoginScreen> {
             password: _passTextController.text.trim());
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const DeshboardPage(),
-        ));
-        print('Succefully logged in');
+        )
+        );
+       
       } on FirebaseException catch (error) {
+     
         GlobalMethods.errorDialog(
             subtitle: '${error.message}', context: context);
         setState(() {
           _isLoading = false;
         });
       } catch (error) {
+     
         GlobalMethods.errorDialog(subtitle: '$error', context: context);
         setState(() {
           _isLoading = false;
@@ -198,25 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: TextButton(
-                      onPressed: () {
-                        // GlobalMethods.navigateTo(
-                        //     ctx: context,
-                        //     routeName: ForgetPasswordScreen.routeName);
-                      },
-                      child: const Text(
-                        'Forget password?',
-                        maxLines: 1,
-                        style: TextStyle(
-                            color: Colors.lightBlue,
-                            fontSize: 18,
-                            decoration: TextDecoration.underline,
-                            fontStyle: FontStyle.normal),
-                      ),
-                    ),
-                  ),
+           
                   const SizedBox(
                     height: 15,
                   ),
@@ -231,69 +217,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      TextWidget(
-                        text: 'OR',
-                        color: Colors.white,
-                        textSize: 18,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      const Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                    ],
-                  ),
+             
                   const SizedBox(
                     height: 10,
                   ),
-                  // AuthButton(
-                  //   fct: () {
-                  //     Navigator.of(context).push(
-                  //       MaterialPageRoute(
-                  //         builder: (context) => const FetchScreen(),
-                  //       ),
-                  //     );
-                  //   },
-                  //   buttonText: 'Continue as a guest',
-                  //   primary: Colors.black,
-                  // ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  RichText(
-                      text: TextSpan(
-                          text: 'Don\'t have an account?',
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 18),
-                          children: [
-                        TextSpan(
-                            text: '  Sign up',
-                            style: const TextStyle(
-                                color: Colors.lightBlue,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                // GlobalMethods.navigateTo(
-                                //     ctx: context,
-                                //     routeName: RegisterScreen.routeName);
-                              }),
-                      ]))
+             
+             
                 ],
               ),
             ),
