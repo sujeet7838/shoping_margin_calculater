@@ -1,4 +1,3 @@
-
 import 'package:calculater/screens/dashboard.dart';
 import 'package:calculater/screens/loading_manager.dart';
 import 'package:calculater/utils/auth_button.dart';
@@ -8,7 +7,6 @@ import 'package:calculater/utils/global_methods.dart';
 import 'package:calculater/utils/text_widget.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -34,7 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isLoading = false;
   void _submitFormOnLogin() async {
-
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
@@ -45,22 +42,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
       try {
         await authInstance.signInWithEmailAndPassword(
-            email: _emailTextController.text.toLowerCase().trim(),
-            password: _passTextController.text.trim());
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const DeshboardPage(),
-        )
+          email: _emailTextController.text.toLowerCase().trim(),
+          password: _passTextController.text.trim(),
         );
-       
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const DeshboardPage()),
+        );
       } on FirebaseException catch (error) {
-     
         GlobalMethods.errorDialog(
-            subtitle: '${error.message}', context: context);
+          subtitle: '${error.message}',
+          context: context,
+        );
         setState(() {
           _isLoading = false;
         });
       } catch (error) {
-     
         GlobalMethods.errorDialog(subtitle: '$error', context: context);
         setState(() {
           _isLoading = false;
@@ -78,59 +74,52 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: LoadingManager(
         isLoading: _isLoading,
-        child: Stack(children: [
-          Swiper(
-            duration: 800,
-            autoplayDelay: 8000,
-            itemBuilder: (BuildContext context, int index) {
-              return Image.asset(
-                Constss.authImagesPaths[index],
-                fit: BoxFit.cover,
-              );
-            },
-            autoplay: true,
-            itemCount: Constss.authImagesPaths.length,
-          ),
-          Container(
-            color: Colors.black.withOpacity(0.7),
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(
-                    height: 120.0,
-                  ),
-                  TextWidget(
-                    text: 'Welcome Back',
-                    color: Colors.white,
-                    textSize: 30,
-                    isTitle: true,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextWidget(
-                    text: "Sign in to continue",
-                    color: Colors.white,
-                    textSize: 18,
-                    isTitle: false,
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  Form(
+        child: Stack(
+          children: [
+            Swiper(
+              itemBuilder: (BuildContext context, int index) {
+                return Image.asset(
+                  Constss.authImagesPaths[index],
+                  fit: BoxFit.cover,
+                );
+              },
+              autoplay: false,
+              itemCount: Constss.authImagesPaths.length,
+            ),
+            Container(color: Colors.black.withOpacity(0.7)),
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const SizedBox(height: 120.0),
+                    TextWidget(
+                      text: 'Welcome Back',
+                      color: Colors.white,
+                      textSize: 30,
+                      isTitle: true,
+                    ),
+                    const SizedBox(height: 8),
+                    TextWidget(
+                      text: "Sign in to continue",
+                      color: Colors.white,
+                      textSize: 18,
+                      isTitle: false,
+                    ),
+                    const SizedBox(height: 30.0),
+                    Form(
                       key: _formKey,
                       child: Column(
                         children: [
                           TextFormField(
                             textInputAction: TextInputAction.next,
-                            onEditingComplete: () => FocusScope.of(context)
-                                .requestFocus(_passFocusNode),
+                            onEditingComplete:
+                                () => FocusScope.of(
+                                  context,
+                                ).requestFocus(_passFocusNode),
                             controller: _emailTextController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
@@ -152,11 +141,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          //Password
+                          const SizedBox(height: 12),
 
+                          //Password
                           TextFormField(
                             textInputAction: TextInputAction.done,
                             onEditingComplete: () {
@@ -176,17 +163,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _obscureText = !_obscureText;
-                                    });
-                                  },
-                                  child: Icon(
-                                    _obscureText
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.white,
-                                  )),
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureText
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.white,
+                                ),
+                              ),
                               hintText: 'Password',
                               hintStyle: const TextStyle(color: Colors.white),
                               enabledBorder: const UnderlineInputBorder(
@@ -198,36 +186,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ],
-                      )),
-                  const SizedBox(
-                    height: 15,
-                  ),
-           
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  AuthButton(
-                    fct: _submitFormOnLogin,
-                    buttonText: 'Login',
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  //const GoogleButton(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-             
-                  const SizedBox(
-                    height: 10,
-                  ),
-             
-             
-                ],
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+
+                    const SizedBox(height: 15),
+                    AuthButton(fct: _submitFormOnLogin, buttonText: 'Login'),
+                    const SizedBox(height: 10),
+                    //const GoogleButton(),
+                    const SizedBox(height: 10),
+
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
-          )
-        ]),
+          ],
+        ),
       ),
     );
   }

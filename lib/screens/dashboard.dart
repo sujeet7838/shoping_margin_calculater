@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:calculater/model/noOfPage.dart';
 import 'package:calculater/repositeries/calculator_repo.dart';
+import 'package:calculater/screens/subscripationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DeshboardPage extends StatefulWidget {
   const DeshboardPage({super.key});
@@ -105,6 +107,20 @@ class _DeshboardPageState extends State<DeshboardPage> {
             .toList();
 
     setState(() {});
+  }
+
+  ///        ------------------ UI Counter logic------------------
+
+  Future<int> getCalculationCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('calc_count') ?? 0;
+  }
+
+  Future<void> increaseCalculationCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    int count = prefs.getInt('calc_count') ?? 0;
+    count++;
+    await prefs.setInt('calc_count', count);
   }
 
   @override
@@ -526,11 +542,11 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                       .toString(),
                                 ).toStringAsFixed(2);
 
-                               // print("labourCostnnnnnnn"+labourCost);
+                                // print("labourCostnnnnnnn"+labourCost);
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       104 &&
                                   int.parse(selectedNoOfPage!.name) <= 148) {
-                                 final lbrcost = 3.00;
+                                final lbrcost = 3.00;
                                 // final lbrcost =
                                 //     1.6 /
                                 //     120 *
@@ -544,7 +560,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                       .toString(),
                                 ).toStringAsFixed(2);
 
-                                 print("labourCostnnnnnnn...."+labourCost);
+                                print("labourCostnnnnnnn...." + labourCost);
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       152 &&
                                   int.parse(selectedNoOfPage!.name) <= 200) {
@@ -563,7 +579,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       204 &&
                                   int.parse(selectedNoOfPage!.name) <= 252) {
-                                  final lbrcost = 3.50;
+                                final lbrcost = 3.50;
                                 // final lbrcost =
                                 //     1.5 /
                                 //     120 *
@@ -575,10 +591,10 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                           lbrcost)
                                       .toString(),
                                 ).toStringAsFixed(2);
-                              }else if (int.parse(selectedNoOfPage!.name) >=
+                              } else if (int.parse(selectedNoOfPage!.name) >=
                                       256 &&
                                   int.parse(selectedNoOfPage!.name) <= 300) {
-                                  final lbrcost = 4.00;
+                                final lbrcost = 4.00;
                                 // final lbrcost =
                                 //     1.5 /
                                 //     120 *
@@ -593,7 +609,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       304 &&
                                   int.parse(selectedNoOfPage!.name) <= 352) {
-                                  final lbrcost = 4.50;
+                                final lbrcost = 4.50;
                                 // final lbrcost =
                                 //     1.5 /
                                 //     120 *
@@ -608,7 +624,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       356 &&
                                   int.parse(selectedNoOfPage!.name) <= 400) {
-                                  final lbrcost = 5.00;
+                                final lbrcost = 5.00;
                                 // final lbrcost =
                                 //     1.5 /
                                 //     120 *
@@ -623,7 +639,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       404 &&
                                   int.parse(selectedNoOfPage!.name) <= 452) {
-                                  final lbrcost = 5.50;
+                                final lbrcost = 5.50;
                                 // final lbrcost =
                                 //     1.5 /
                                 //     120 *
@@ -638,7 +654,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               } else if (int.parse(selectedNoOfPage!.name) >=
                                       456 &&
                                   int.parse(selectedNoOfPage!.name) <= 500) {
-                                  final lbrcost = 6.00;
+                                final lbrcost = 6.00;
                                 // final lbrcost =
                                 //     1.5 /
                                 //     120 *
@@ -650,11 +666,9 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                           lbrcost)
                                       .toString(),
                                 ).toStringAsFixed(2);
-                              } 
+                              }
 
-               //////////////////////////////////////Sprial Bound///////////////////////////////////
-
-
+                              //////////////////////////////////////Sprial Bound///////////////////////////////////
                             } else if (articlevalue == "Staple bound") {
                               //labourCost Staple bound
                               if (selectedNoOfPage!.name == "2") {
@@ -699,14 +713,13 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                     1.5 /
                                     120 *
                                     int.parse(selectedNoOfPage!.name);
-                                  print("Labour Cost Double: $lbrcost");
-                                labourCost = (0 +
-                                        0 +
-                                        0.50 +
-                                        lbrcost)
+                                print("Labour Cost Double: $lbrcost");
+                                labourCost = (0 + 0 + 0.50 + lbrcost)
                                     .toStringAsFixed(2);
 
-                                      print("labourCostLabour Cost Double: $labourCost");
+                                print(
+                                  "labourCostLabour Cost Double: $labourCost",
+                                );
                               }
                             }
                           });
@@ -797,50 +810,62 @@ class _DeshboardPageState extends State<DeshboardPage> {
     String pageRate,
     String labourCost,
     NoOfPageModel? selectedNoOfPage,
-  ) {
-    final divRW = double.tryParse('20000'.toString()) ?? 1;
-    final divPageRate = double.tryParse('8000'.toString()) ?? 1;
-    // final stPageType = double.tryParse("49".toString()) ?? 1;
-    final stPageType = double.tryParse(pageRate.toString()) ?? 1;
-    final sizeOfPageDouble = double.tryParse(sizeOfPage) ?? 0;
-    final pagevalueDouble = double.tryParse(pagevalue.toString()) ?? 0;
-    final selectedNoOfPageValue = selectedNoOfPage!.value;
-    final boardPriceDouble = double.tryParse(boardPrice) ?? 0;
-    final rimWeght = sizeOfPageDouble * pagevalueDouble / divRW;
-    final riwPrice = rimWeght;
-    double value = double.parse(riwPrice.toString());
-    double result = (value * 10).round() / 10;
+  ) async {
+    int count = await getCalculationCount();
 
-    setState(() {
-      // finalResult = ((((result * stPageType / divPageRate) *
-      //                 selectedNoOfPageValue) +
-      //             boardPriceDouble +
-      //             0.75) *
-      //         (100 + 18) /
-      //         100)
-      //     .toStringAsFixed(3);
+    if (count >= 15) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SubscriptionScreen()),
+      );
+    } else {
+      await increaseCalculationCount();
 
-      // double finalValue = double.parse(finalResult);
-      // finalResultRounded = (finalValue * 10).ceil() / 10;
-      final labourCostDouble = double.tryParse(labourCost) ?? 0;
-      profit = ((((result * stPageType / divPageRate) * selectedNoOfPageValue) +
-              boardPriceDouble +
-              labourCostDouble) % 25)
-          .toStringAsFixed(3);
+      final divRW = double.tryParse('20000'.toString()) ?? 1;
+      final divPageRate = double.tryParse('8000'.toString()) ?? 1;
+      // final stPageType = double.tryParse("49".toString()) ?? 1;
+      final stPageType = double.tryParse(pageRate.toString()) ?? 1;
+      final sizeOfPageDouble = double.tryParse(sizeOfPage) ?? 0;
+      final pagevalueDouble = double.tryParse(pagevalue.toString()) ?? 0;
+      final selectedNoOfPageValue = selectedNoOfPage!.value;
+      final boardPriceDouble = double.tryParse(boardPrice) ?? 0;
+      final rimWeght = sizeOfPageDouble * pagevalueDouble / divRW;
+      final riwPrice = rimWeght;
+      double value = double.parse(riwPrice.toString());
+      double result = (value * 10).round() / 10;
 
+      setState(() {
+        // finalResult = ((((result * stPageType / divPageRate) *
+        //                 selectedNoOfPageValue) +
+        //             boardPriceDouble +
+        //             0.75) *
+        //         (100 + 18) /
+        //         100)
+        //     .toStringAsFixed(3);
 
-     print( "Profit: $profit");
-    
-      finalResult = ((((result * stPageType / divPageRate) *
-                      selectedNoOfPageValue) +
-                  boardPriceDouble +
-                  labourCostDouble) *
-              (100 + 18) /
-              100)
-          .toStringAsFixed(3);
+        // double finalValue = double.parse(finalResult);
+        // finalResultRounded = (finalValue * 10).ceil() / 10;
+        final labourCostDouble = double.tryParse(labourCost) ?? 0;
+        profit = ((((result * stPageType / divPageRate) *
+                        selectedNoOfPageValue) +
+                    boardPriceDouble +
+                    labourCostDouble) %
+                25)
+            .toStringAsFixed(3);
 
-      double finalValue = double.parse(finalResult);
-      finalResultRounded = (finalValue * 10).ceil() / 10;
-    });
+        print("Profit: $profit");
+
+        finalResult = ((((result * stPageType / divPageRate) *
+                        selectedNoOfPageValue) +
+                    boardPriceDouble +
+                    labourCostDouble) *
+                (100 + 18) /
+                100)
+            .toStringAsFixed(3);
+
+        double finalValue = double.parse(finalResult);
+        finalResultRounded = (finalValue * 10).ceil() / 10;
+      });
+    }
   }
 }
