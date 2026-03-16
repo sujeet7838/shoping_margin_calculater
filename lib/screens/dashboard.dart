@@ -40,6 +40,8 @@ class _DeshboardPageState extends State<DeshboardPage> {
   String finalResult = '';
   String profit = '';
   double finalResultRounded = 0.0;
+  double profitRounded = 0.0;
+  String profitCondition = '';
 
   /// ------------------ STATIC DROPDOWN 1 ------------------
   final List<String> bindingTypes =
@@ -183,7 +185,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                             onTypeChanged(value);
                             articlevalue = value!;
 
-                            /// print("article value $articlevalue");
+                            //print("article value $articlevalue");
                           });
                         },
                       ),
@@ -760,6 +762,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                   ? null // 🚫 button disabled
                                   : () {
                                     _multiply(
+                                      articlevalue,
                                       sizeOfPage,
                                       boardPrice,
                                       pagevalue,
@@ -804,6 +807,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
   }
 
   void _multiply(
+    String articlevalue,
     String sizeOfPage,
     String boardPrice,
     final pagevalue,
@@ -811,9 +815,9 @@ class _DeshboardPageState extends State<DeshboardPage> {
     String labourCost,
     NoOfPageModel? selectedNoOfPage,
   ) async {
+ 
     int count = await getCalculationCount();
-
-    if (count >= 15) {
+    if (count >= 5) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => SubscriptionScreen()),
@@ -835,16 +839,6 @@ class _DeshboardPageState extends State<DeshboardPage> {
       double result = (value * 10).round() / 10;
 
       setState(() {
-        // finalResult = ((((result * stPageType / divPageRate) *
-        //                 selectedNoOfPageValue) +
-        //             boardPriceDouble +
-        //             0.75) *
-        //         (100 + 18) /
-        //         100)
-        //     .toStringAsFixed(3);
-
-        // double finalValue = double.parse(finalResult);
-        // finalResultRounded = (finalValue * 10).ceil() / 10;
         final labourCostDouble = double.tryParse(labourCost) ?? 0;
         profit = ((((result * stPageType / divPageRate) *
                         selectedNoOfPageValue) +
@@ -853,13 +847,42 @@ class _DeshboardPageState extends State<DeshboardPage> {
                 25)
             .toStringAsFixed(3);
 
-        print("Profit: $profit");
+        profitRounded = (double.parse(profit) * 10).ceil() / 10;
+        print("profit..$profitRounded");
+
+        if (articlevalue == "Sprial Bound") {
+          if (profitRounded >= 0 && profitRounded <= 10) {
+            profitCondition = '18';
+          } else if (profitRounded >= 10 && profitRounded <= 20) {
+            profitCondition = '18';
+          } else if (profitRounded >= 20 && profitRounded <= 30) {
+            profitCondition = '22';
+          } else if (profitRounded >= 30 && profitRounded <= 40) {
+            profitCondition = '25';
+          } else if (profitRounded >= 40 && profitRounded <= 50) {
+            profitCondition = '28';
+          }
+        } else if (articlevalue == "Staple bound") {
+          if (profitRounded >= 0 && profitRounded <= 10) {
+            profitCondition = '18';
+          } else if (profitRounded >= 10 && profitRounded <= 20) {
+            profitCondition = '18';
+          } else if (profitRounded >= 20 && profitRounded <= 30) {
+            profitCondition = '22';
+          } else if (profitRounded >= 30 && profitRounded <= 40) {
+            profitCondition = '25';
+          } else if (profitRounded >= 40 && profitRounded <= 50) {
+            profitCondition = '28';
+          }
+        } else if (articlevalue == "Glu Bound") {
+          profitCondition = '25';
+        }
 
         finalResult = ((((result * stPageType / divPageRate) *
                         selectedNoOfPageValue) +
                     boardPriceDouble +
                     labourCostDouble) *
-                (100 + 18) /
+                (100 + int.parse(profitCondition)) /
                 100)
             .toStringAsFixed(3);
 
