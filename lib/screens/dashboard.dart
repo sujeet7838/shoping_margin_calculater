@@ -816,16 +816,86 @@ class _DeshboardPageState extends State<DeshboardPage> {
     NoOfPageModel? selectedNoOfPage,
   ) async {
  
-    int count = await getCalculationCount();
-    if (count >= 5) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SubscriptionScreen()),
-      );
-    } else {
-      await increaseCalculationCount();
+   // int count = await getCalculationCount();
+    // if (count >= 5) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => SubscriptionScreen()),
+    //   );
+    // } else {
+    //   await increaseCalculationCount();
 
-      final divRW = double.tryParse('20000'.toString()) ?? 1;
+    //   final divRW = double.tryParse('20000'.toString()) ?? 1;
+    //   final divPageRate = double.tryParse('8000'.toString()) ?? 1;
+    //   // final stPageType = double.tryParse("49".toString()) ?? 1;
+    //   final stPageType = double.tryParse(pageRate.toString()) ?? 1;
+    //   final sizeOfPageDouble = double.tryParse(sizeOfPage) ?? 0;
+    //   final pagevalueDouble = double.tryParse(pagevalue.toString()) ?? 0;
+    //   final selectedNoOfPageValue = selectedNoOfPage!.value;
+    //   final boardPriceDouble = double.tryParse(boardPrice) ?? 0;
+    //   final rimWeght = sizeOfPageDouble * pagevalueDouble / divRW;
+    //   final riwPrice = rimWeght;
+    //   double value = double.parse(riwPrice.toString());
+    //   double result = (value * 10).round() / 10;
+
+    //   setState(() {
+    //     final labourCostDouble = double.tryParse(labourCost) ?? 0;
+    //     profit = ((((result * stPageType / divPageRate) *
+    //                     selectedNoOfPageValue) +
+    //                 boardPriceDouble +
+    //                 labourCostDouble) %
+    //             25)
+    //         .toStringAsFixed(3);
+
+    //     profitRounded = (double.parse(profit) * 10).ceil() / 10;
+    //     print("profit..$profitRounded");
+
+    //     if (articlevalue == "Staple bound") {
+    //          print("Staple==profitCondition..$profitRounded");
+    //       if (profitRounded >= 0 && profitRounded <= 10) {
+    //         profitCondition = '18';
+    //       } else if (profitRounded >= 10 && profitRounded <= 20) {
+    //         profitCondition = '18';
+    //       } else if (profitRounded >= 20 && profitRounded <= 30) {
+    //         profitCondition = '22';
+    //       } else if (profitRounded >= 30 && profitRounded <= 40) {
+    //         profitCondition = '25';
+    //       } else if (profitRounded >= 40 && profitRounded <= 50) {
+    //         profitCondition = '28';
+    //       }
+    //     } else if (articlevalue == "Glu Bound") {
+    //        print("Glu==profitCondition..$profitRounded");
+    //       if (profitRounded >= 0 && profitRounded <= 10) {
+    //         profitCondition = '18';
+    //       } else if (profitRounded >= 10 && profitRounded <= 20) {
+    //         profitCondition = '18';
+    //       } else if (profitRounded >= 20 && profitRounded <= 30) {
+    //         profitCondition = '22';
+    //       } else if (profitRounded >= 30 && profitRounded <= 40) {
+    //         profitCondition = '25';
+    //       } else if (profitRounded >= 40 && profitRounded <= 50) {
+    //         profitCondition = '28';
+    //       }
+    //     } else if (articlevalue == "Sprial Bound") {
+    //       profitCondition = '25';
+    //        print("SprialprofitCondition..$profitRounded");
+    //     }
+
+    //     finalResult = ((((result * stPageType / divPageRate) *
+    //                     selectedNoOfPageValue) +
+    //                 boardPriceDouble +
+    //                 labourCostDouble) *
+    //             (100 + int.parse(profitCondition)) /
+    //             100)
+    //         .toStringAsFixed(3);
+
+    //     double finalValue = double.parse(finalResult);
+    //     finalResultRounded = (finalValue * 10).ceil() / 10;
+    //   });
+    // }
+
+
+    final divRW = double.tryParse('20000'.toString()) ?? 1;
       final divPageRate = double.tryParse('8000'.toString()) ?? 1;
       // final stPageType = double.tryParse("49".toString()) ?? 1;
       final stPageType = double.tryParse(pageRate.toString()) ?? 1;
@@ -850,19 +920,8 @@ class _DeshboardPageState extends State<DeshboardPage> {
         profitRounded = (double.parse(profit) * 10).ceil() / 10;
         print("profit..$profitRounded");
 
-        if (articlevalue == "Sprial Bound") {
-          if (profitRounded >= 0 && profitRounded <= 10) {
-            profitCondition = '18';
-          } else if (profitRounded >= 10 && profitRounded <= 20) {
-            profitCondition = '18';
-          } else if (profitRounded >= 20 && profitRounded <= 30) {
-            profitCondition = '22';
-          } else if (profitRounded >= 30 && profitRounded <= 40) {
-            profitCondition = '25';
-          } else if (profitRounded >= 40 && profitRounded <= 50) {
-            profitCondition = '28';
-          }
-        } else if (articlevalue == "Staple bound") {
+        if (articlevalue == "Staple bound") {
+             print("Staple==profitCondition..$profitRounded");
           if (profitRounded >= 0 && profitRounded <= 10) {
             profitCondition = '18';
           } else if (profitRounded >= 10 && profitRounded <= 20) {
@@ -875,7 +934,21 @@ class _DeshboardPageState extends State<DeshboardPage> {
             profitCondition = '28';
           }
         } else if (articlevalue == "Glu Bound") {
+           print("Glu==profitCondition..$profitRounded");
+          if (profitRounded >= 0 && profitRounded <= 10) {
+            profitCondition = '18';
+          } else if (profitRounded >= 10 && profitRounded <= 20) {
+            profitCondition = '18';
+          } else if (profitRounded >= 20 && profitRounded <= 30) {
+            profitCondition = '22';
+          } else if (profitRounded >= 30 && profitRounded <= 40) {
+            profitCondition = '25';
+          } else if (profitRounded >= 40 && profitRounded <= 50) {
+            profitCondition = '28';
+          }
+        } else if (articlevalue == "Sprial Bound") {
           profitCondition = '25';
+           print("SprialprofitCondition..$profitRounded");
         }
 
         finalResult = ((((result * stPageType / divPageRate) *
@@ -889,6 +962,5 @@ class _DeshboardPageState extends State<DeshboardPage> {
         double finalValue = double.parse(finalResult);
         finalResultRounded = (finalValue * 10).ceil() / 10;
       });
-    }
   }
 }

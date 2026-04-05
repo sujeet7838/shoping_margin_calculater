@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       title: 'Calculater App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: LoginScreen(),
-    //home: DeshboardPage(),
+     // home: LoginScreen(),
+    home: DeshboardPage(),
     );
   }
 }

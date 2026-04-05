@@ -1,11 +1,9 @@
 import 'package:calculater/screens/dashboard.dart';
 import 'package:calculater/screens/loading_manager.dart';
 import 'package:calculater/utils/auth_button.dart';
-import 'package:calculater/utils/constss.dart';
 import 'package:calculater/utils/firebase_const.dart';
 import 'package:calculater/utils/global_methods.dart';
 import 'package:calculater/utils/text_widget.dart';
-import 'package:card_swiper/card_swiper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _passFocusNode.dispose();
     super.dispose();
   }
-
   bool _isLoading = false;
   void _submitFormOnLogin() async {
     final isValid = _formKey.currentState!.validate();
@@ -76,16 +73,16 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading: _isLoading,
         child: Stack(
           children: [
-            Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                return Image.asset(
-                  Constss.authImagesPaths[index],
-                  fit: BoxFit.cover,
-                );
-              },
-              autoplay: false,
-              itemCount: Constss.authImagesPaths.length,
-            ),
+            // Swiper(
+            //   itemBuilder: (BuildContext context, int index) {
+            //     return Image.asset(
+            //       Constss.authImagesPaths[index],
+            //       fit: BoxFit.cover,
+            //     );
+            //   },
+            //   autoplay: false,
+            //   itemCount: Constss.authImagesPaths.length,
+            // ),
             Container(color: Colors.black.withOpacity(0.7)),
             SingleChildScrollView(
               child: Padding(
