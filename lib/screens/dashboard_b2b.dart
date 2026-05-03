@@ -6,14 +6,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class DeshboardPage extends StatefulWidget {
-  const DeshboardPage({super.key});
+class DeshboardB2BPage extends StatefulWidget {
+  const DeshboardB2BPage({super.key});
 
   @override
-  State<DeshboardPage> createState() => _DeshboardPageState();
+  State<DeshboardB2BPage> createState() => _DeshboardB2BPageState();
 }
 
-class _DeshboardPageState extends State<DeshboardPage> {
+class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
   String coverColor = 'Select a cover';
   String boardType = 'Select a board';
 
@@ -130,7 +130,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'NoteBook B2C',
+          'NoteBook B2B',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
@@ -150,290 +150,443 @@ class _DeshboardPageState extends State<DeshboardPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Article",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
+                      Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-                      SizedBox(height: 10),
-
-                      DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        hint: Text("Select a bound"),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        value: selectedType,
-                        items:
-                            bindingTypes
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(e),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Column(
+                            children: [
+                              /// ARTICLE FIELD
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  /// LABEL
+                                  SizedBox(
+                                    width: 90,
+                                    child: Text(
+                                      "Article",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
-                                )
-                                .toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            onTypeChanged(value);
-                            articlevalue = value!;
-                            isSliderVisible = true;
-                            //print("article value $articlevalue");
-                          });
-                        },
-                      ),
 
-                      SizedBox(height: 10),
-
-                      Text(
-                        "Model",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-
-                      DropdownButtonFormField<String>(
-                        hint: Text("Select a model"),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        value: selectedPage,
-                        items:
-                            filteredPages
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(e),
+                                  /// INPUT
+                                  Expanded(
+                                    child: DropdownButtonFormField<String>(
+                                      isExpanded: true,
+                                      hint: Text("Select a bound"),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                      ),
+                                      value: selectedType,
+                                      items:
+                                          bindingTypes
+                                              .map(
+                                                (e) => DropdownMenuItem(
+                                                  value: e,
+                                                  child: Text(e),
+                                                ),
+                                              )
+                                              .toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          onTypeChanged(value);
+                                          articlevalue = value!;
+                                          isSliderVisible = true;
+                                          //print("article value $articlevalue");
+                                        });
+                                      },
+                                    ),
                                   ),
-                                )
-                                .toList(),
-                        onChanged:
-                            filteredPages.isEmpty
-                                ? null
-                                : (val) {
-                                  setState(() {
-                                    onPageChanged(val);
-                                    modelvalue = val!;
-
-                                    if (selectedPage! == "A5/DC" ||
-                                        selectedPage == "Crown") {
-                                      coverColor = "Color & Brown";
-                                      colorValue = coverColor;
-                                    } else if (selectedPage == "Crown 10") {
-                                      coverColor = "Brown";
-                                      colorValue = coverColor;
-                                    } else {
-                                      coverColor = "Colour";
-                                      colorValue = coverColor;
-                                    }
-
-                                    // board type logic
-                                    if (selectedPage! == "Notes Lover" ||
-                                        selectedPage! == "A4 Premium") {
-                                      boardType = "SBS/WB/270";
-                                      sizeOfPage = "5040";
-                                      boardPrice = "5";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Yuva Spiral" ||
-                                        selectedPage! == "Yuva") {
-                                      boardType = "Duplex/WB/A4/250";
-                                      boardvalue = boardType;
-                                      sizeOfPage = "5040";
-                                      boardPrice = "2.60";
-                                    } else if (selectedPage! == "Sawera" ||
-                                        selectedPage! == "Sawera Spiral") {
-                                      boardType = "Bahal/GB/190";
-                                      sizeOfPage = "4212";
-                                      boardvalue = boardType;
-                                      boardPrice = "2.10";
-                                    } else if (selectedPage! ==
-                                            "Oblong Spiral" ||
-                                        selectedPage! == "Oblong") {
-                                      boardType = "Duplex/WB/OB/250";
-                                      sizeOfPage = "3795";
-                                      boardPrice = "3.50";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "A5/DC" ||
-                                        selectedPage! == "A5/DC Sprial") {
-                                      boardType = "SBS/WB/250";
-                                      sizeOfPage = "3626";
-                                      boardPrice = "3.10";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "RangRiti" ||
-                                        selectedPage! == "Rangriti Spiral") {
-                                      boardType = "Duplex/WB/RR/250";
-                                      sizeOfPage = "6528 ";
-                                      boardPrice = "3.50";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Star Kid") {
-                                      boardType = "Duplex/WB/A5/250";
-                                      sizeOfPage = "3626";
-                                      boardPrice = "2.60";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Saptrishi") {
-                                      boardType = "GB/NL/A5";
-                                      sizeOfPage = "3626";
-                                      boardPrice = "1.10";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Crown") {
-                                      boardType = "Duplex/GB/230";
-                                      sizeOfPage = "3220";
-                                      boardPrice = "2.40";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Prime") {
-                                      boardType = "Board/GB/180";
-                                      sizeOfPage = "3220";
-                                      boardPrice = "1.50";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Mogli") {
-                                      boardType = "GB/NL/CR";
-                                      sizeOfPage = "3220";
-                                      boardPrice = "0.60";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Practical") {
-                                      boardType = "Duplex/WB/PT/250";
-                                      sizeOfPage = "5104";
-                                      boardPrice = "4.50";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Mogli 10") {
-                                      boardType = "GB/CR 180";
-                                      sizeOfPage = "3220";
-                                      boardPrice = "1";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Saptrishi") {
-                                      boardType = "GB/NL/A5";
-                                      sizeOfPage = "3626";
-                                      boardPrice = "1.10";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Scrape Book") {
-                                      boardType = "Comming soon..";
-                                      sizeOfPage = "5040";
-                                      // boardValue=""
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Creater") {
-                                      boardType = "Duplex/WB/A4/250";
-                                      sizeOfPage = "5040";
-                                      boardPrice = "2.60";
-                                      boardvalue = boardType;
-                                    } else if (selectedPage! == "Sawera") {
-                                      boardType = "Bahal/GB/190";
-                                      sizeOfPage = "4212";
-                                      boardPrice = "2.10";
-                                      boardvalue = boardType;
-                                    } else {
-                                      boardType = "Select a board";
-                                      boardvalue = boardType;
-                                    }
-                                  });
-                                },
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        "Cover",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 10),
+                      // second card
+                      Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Column(
+                            children: [
+                              /// ARTICLE FIELD
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  /// LABEL
+                                  SizedBox(
+                                    width: 90,
+                                    child: Text(
+                                      "Model",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
 
-                      TextField(
-                        controller: TextEditingController(
-                          text:
-                              selectedPage != null
-                                  ? coverColor
-                                  : 'Select a cover',
-                        ),
-                        readOnly: true,
-                        style: TextStyle(
-                          fontSize: 18,
-                          // color: Colors.grey,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        decoration: InputDecoration(
-                          filled: false,
-                          contentPadding: EdgeInsets.only(left: 15.0),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.grey,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
+                                  /// INPUT
+                                  Expanded(
+                                    child: DropdownButtonFormField<String>(
+                                      hint: Text("Select a model"),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                      ),
+                                      value: selectedPage,
+                                      items:
+                                          filteredPages
+                                              .map(
+                                                (e) => DropdownMenuItem(
+                                                  value: e,
+                                                  child: Text(e),
+                                                ),
+                                              )
+                                              .toList(),
+                                      onChanged:
+                                          filteredPages.isEmpty
+                                              ? null
+                                              : (val) {
+                                                setState(() {
+                                                  onPageChanged(val);
+                                                  modelvalue = val!;
+
+                                                  if (selectedPage! ==
+                                                          "A5/DC" ||
+                                                      selectedPage == "Crown") {
+                                                    coverColor =
+                                                        "Color & Brown";
+                                                    colorValue = coverColor;
+                                                  } else if (selectedPage ==
+                                                      "Crown 10") {
+                                                    coverColor = "Brown";
+                                                    colorValue = coverColor;
+                                                  } else {
+                                                    coverColor = "Colour";
+                                                    colorValue = coverColor;
+                                                  }
+
+                                                  // board type logic
+                                                  if (selectedPage! ==
+                                                          "Notes Lover" ||
+                                                      selectedPage! ==
+                                                          "A4 Premium") {
+                                                    boardType = "SBS/WB/270";
+                                                    sizeOfPage = "5040";
+                                                    boardPrice = "5";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                          "Yuva Spiral" ||
+                                                      selectedPage! == "Yuva") {
+                                                    boardType =
+                                                        "Duplex/WB/A4/250";
+                                                    boardvalue = boardType;
+                                                    sizeOfPage = "5040";
+                                                    boardPrice = "2.60";
+                                                  } else if (selectedPage! ==
+                                                          "Sawera" ||
+                                                      selectedPage! ==
+                                                          "Sawera Spiral") {
+                                                    boardType = "Bahal/GB/190";
+                                                    sizeOfPage = "4212";
+                                                    boardvalue = boardType;
+                                                    boardPrice = "2.10";
+                                                  } else if (selectedPage! ==
+                                                          "Oblong Spiral" ||
+                                                      selectedPage! ==
+                                                          "Oblong") {
+                                                    boardType =
+                                                        "Duplex/WB/OB/250";
+                                                    sizeOfPage = "3795";
+                                                    boardPrice = "3.50";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                          "A5/DC" ||
+                                                      selectedPage! ==
+                                                          "A5/DC Sprial") {
+                                                    boardType = "SBS/WB/250";
+                                                    sizeOfPage = "3626";
+                                                    boardPrice = "3.10";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                          "RangRiti" ||
+                                                      selectedPage! ==
+                                                          "Rangriti Spiral") {
+                                                    boardType =
+                                                        "Duplex/WB/RR/250";
+                                                    sizeOfPage = "6528 ";
+                                                    boardPrice = "3.50";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Star Kid") {
+                                                    boardType =
+                                                        "Duplex/WB/A5/250";
+                                                    sizeOfPage = "3626";
+                                                    boardPrice = "2.60";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Saptrishi") {
+                                                    boardType = "GB/NL/A5";
+                                                    sizeOfPage = "3626";
+                                                    boardPrice = "1.10";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Crown") {
+                                                    boardType = "Duplex/GB/230";
+                                                    sizeOfPage = "3220";
+                                                    boardPrice = "2.40";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Prime") {
+                                                    boardType = "Board/GB/180";
+                                                    sizeOfPage = "3220";
+                                                    boardPrice = "1.50";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Mogli") {
+                                                    boardType = "GB/NL/CR";
+                                                    sizeOfPage = "3220";
+                                                    boardPrice = "0.60";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Practical") {
+                                                    boardType =
+                                                        "Duplex/WB/PT/250";
+                                                    sizeOfPage = "5104";
+                                                    boardPrice = "4.50";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Mogli 10") {
+                                                    boardType = "GB/CR 180";
+                                                    sizeOfPage = "3220";
+                                                    boardPrice = "1";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Saptrishi") {
+                                                    boardType = "GB/NL/A5";
+                                                    sizeOfPage = "3626";
+                                                    boardPrice = "1.10";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Scrape Book") {
+                                                    boardType =
+                                                        "Comming soon..";
+                                                    sizeOfPage = "5040";
+                                                    // boardValue=""
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Creater") {
+                                                    boardType =
+                                                        "Duplex/WB/A4/250";
+                                                    sizeOfPage = "5040";
+                                                    boardPrice = "2.60";
+                                                    boardvalue = boardType;
+                                                  } else if (selectedPage! ==
+                                                      "Sawera") {
+                                                    boardType = "Bahal/GB/190";
+                                                    sizeOfPage = "4212";
+                                                    boardPrice = "2.10";
+                                                    boardvalue = boardType;
+                                                  } else {
+                                                    boardType =
+                                                        "Select a board";
+                                                    boardvalue = boardType;
+                                                  }
+                                                });
+                                              },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
 
                       SizedBox(height: 10),
-                      Text(
-                        "Board",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
+                      // third card
+                      Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-                      SizedBox(height: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Column(
+                            children: [
+                              /// ARTICLE FIELD
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  /// LABEL
+                                  SizedBox(
+                                    width: 90,
+                                    child: Text(
+                                      "Cover",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
 
-                      TextField(
-                        controller: TextEditingController(
-                          text:
-                              selectedPage != null
-                                  ? boardType
-                                  : 'Select a board',
-                        ),
-                        readOnly: true,
-                        style: TextStyle(
-                          fontSize: 18,
-                          // color: Colors.grey,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        decoration: InputDecoration(
-                          filled: false,
-                          contentPadding: EdgeInsets.only(left: 15.0),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.grey,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
+                                  /// INPUT
+                                  Expanded(
+                                    child: TextField(
+                                      controller: TextEditingController(
+                                        text:
+                                            selectedPage != null
+                                                ? coverColor
+                                                : 'Select a cover',
+                                      ),
+                                      readOnly: true,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        // color: Colors.grey,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                      decoration: InputDecoration(
+                                        filled: false,
+                                        contentPadding: EdgeInsets.only(
+                                          left: 15.0,
+                                        ),
+                                        suffixIcon: Icon(Icons.arrow_drop_down),
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
 
                       SizedBox(height: 10),
-                      Text(
-                        "Page",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
+
+                      //fourth card
+                      Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Column(
+                            children: [
+                              /// ARTICLE FIELD
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  /// LABEL
+                                  SizedBox(
+                                    width: 90,
+                                    child: Text(
+                                      "Board",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+
+                                  /// INPUT
+                                  Expanded(
+                                    child: TextField(
+                                      
+                                      controller: TextEditingController(
+                                        text: selectedPage != null
+                                            ? boardType
+                                            : 'Select a board',
+                                      ),
+                                      readOnly: true,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        // color: Colors.grey,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                      decoration: InputDecoration(
+                                        filled: false,
+                                        contentPadding: EdgeInsets.only(
+                                          left: 15.0,
+                                        ),
+                                        suffixIcon: Icon(Icons.arrow_drop_down),
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 15),
 
-                      /// Dropdown 3 – Paper Name
-                      DropdownButtonFormField<Map<String, dynamic>>(
+                      SizedBox(height: 10),
+
+                      // fifth card
+                          Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Column(
+                            children: [
+                              /// ARTICLE FIELD
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  /// LABEL
+                                  SizedBox(
+                                    width: 90,
+                                    child: Text(
+                                      "Page",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+
+                                  /// INPUT
+                                  Expanded(
+                                    child:     DropdownButtonFormField<Map<String, dynamic>>(
                         hint: Text("Select a page"),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -500,21 +653,47 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                   });
                                 },
                       ),
-
-                      SizedBox(height: 10),
-                      Text(
-                        "No of Page",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 15),
+                   
+                  
+                  
 
-                      DropdownButtonFormField<NoOfPageModel>(
+                      SizedBox(height: 10),
+                      // sixth card
+                          Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Column(
+                            children: [
+                              /// ARTICLE FIELD
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  /// LABEL
+                                  SizedBox(
+                                    width: 90,
+                                    child: Text(
+                                      "No of Page",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+
+                                  /// INPUT
+                                  Expanded(
+                                    child:  DropdownButtonFormField<NoOfPageModel>(
                         value: selectedNoOfPage,
                         hint: Text("Select a no of page"),
                         items:
@@ -684,7 +863,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                                 labourCost = lbrcost.toStringAsFixed(3);
                               } else {
                                 labourCost = "0";
-                                print("Labour Cost: $labourCost");                                  
+                                
                               }
                             } else if (articlevalue == "Glu Bound") {
                               //labourCost "Glu Bound
@@ -720,6 +899,13 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           ),
                         ),
                       ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 15),
 
                       if (isSliderVisible)
@@ -727,7 +913,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                           children: [
                             CarouselSlider(
                               options: CarouselOptions(
-                                height: 150,
+                                //height: 150,
                                 autoPlay: true, // 🔥 auto scroll ON
                                 autoPlayInterval: Duration(seconds: 3),
                                 autoPlayAnimationDuration: Duration(
@@ -744,13 +930,10 @@ class _DeshboardPageState extends State<DeshboardPage> {
                               items:
                                   images.map((url) {
                                     return ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: AspectRatio(
-                                        aspectRatio: 16 / 9,
-                                        child: Image.network(
-                                          url,
-                                          fit: BoxFit.contain,
-                                        ),
+                                      borderRadius: BorderRadius.circular(0),
+                                      child: Image.network(
+                                        url,
+                                        fit: BoxFit.cover,
                                       ),
                                     );
                                   }).toList(),
@@ -847,7 +1030,7 @@ class _DeshboardPageState extends State<DeshboardPage> {
                             ),
                           ),
 
-                          SizedBox(height: 10),
+                          SizedBox(width: 10),
 
                           /// 🔵 Discount Dropdown
                           Expanded(
@@ -974,67 +1157,51 @@ class _DeshboardPageState extends State<DeshboardPage> {
     final rimWeght = sizeOfPageDouble * pagevalueDouble / divRW;
     final riwPrice = rimWeght;
     double value = double.parse(riwPrice.toString());
-    double result = (value * 10) / 10;
-    final labourCostDouble = double.tryParse(labourCost) ?? 0;
-      print("resultCost>>>> $result");
-       print("stPageType>>>> $stPageType");
-        print("divPageRate>>>> $divPageRate");
-        print("selectedNoOfPageValue>>>> $selectedNoOfPageValue");
-        print("boardPriceDouble>>>> $boardPriceDouble");
-        print("labourCostDouble>>>> $labourCostDouble");
+    double result = (value * 10).round() / 10;
 
     setState(() {
-      profit = (((((result * stPageType / divPageRate) * selectedNoOfPageValue) +
-                  boardPriceDouble +
-                  labourCostDouble))).toString();
+      final labourCostDouble = double.tryParse(labourCost) ?? 0;
+      profit = ((((result * stPageType / divPageRate) * selectedNoOfPageValue) +
+              boardPriceDouble +
+              labourCostDouble))
+          .toStringAsFixed(3);
 
-          print("profitCost>>>> "+profit.toString());
-
-       profitRounded = (double.parse(profit) * 10).ceil() / 10;
-       print("final profit..$profitRounded"); 
-        
+      profitRounded = (double.parse(profit) * 10).ceil() / 10;
+      print("profit..$profitRounded");
 
       if (articlevalue == "Staple bound") {
-        if (profitRounded >= 0 && profitRounded <= 10) {
+        if (profitRounded >= 0 && profitRounded <= 20) {
           profitCondition = '18';
           print(profitCondition);
-
-        } else if (profitRounded >= 10 && profitRounded <= 20) {
-          profitCondition = '18';
-            print(profitCondition);
-
         } else if (profitRounded >= 20 && profitRounded <= 30) {
-          profitCondition = '22';
-            print(profitCondition);
-             print(profitCondition);
+          profitCondition = '18';
+          print(profitCondition);
         } else if (profitRounded >= 30 && profitRounded <= 40) {
-          profitCondition = '25';
-            print(profitCondition);
-            print(profitRounded);
-
+          profitCondition = '18';
+          print(profitCondition);
         } else if (profitRounded >= 40) {
-          profitCondition = '28';
-             print(profitCondition);
-            print(profitCondition);
-
+          profitCondition = '18';
         }
       } else if (articlevalue == "Glu Bound") {
-          print("Glu==profitCondition..$profitRounded");
-        if (profitRounded >= 0 && profitRounded <= 10) {
+        print("Glu==profitCondition..$profitRounded");
+        if (profitRounded >= 0 && profitRounded <= 20) {
           profitCondition = '18';
-        } else if (profitRounded >= 10 && profitRounded <= 20) {
-          profitCondition = '18';
+          print(profitCondition);
         } else if (profitRounded >= 20 && profitRounded <= 30) {
-          profitCondition = '22';
+          print("Profit200>..$profitRounded");
+          profitCondition = '18';
         } else if (profitRounded >= 30 && profitRounded <= 40) {
-          profitCondition = '25';
-        } else if (profitRounded >= 40 ) {
-          profitCondition = '28';
+          print("Profit30>..$profitRounded");
+          profitCondition = '18';
+        } else if (profitRounded >= 40) {
+          print("Profit40>..$profitRounded");
+          profitCondition = '18';
+          print(profitCondition);
         }
       } else if (articlevalue == "Sprial Bound") {
-          print("Sprial==profitCondition..$profitRounded");
-        profitCondition = '25';
-            print(profitCondition);
+        profitCondition = '18';
+        print("SprialprofitCondition..$profitRounded");
+        print(profitCondition);
       }
 
       finalResult = ((((result * stPageType / divPageRate) *
@@ -1044,12 +1211,14 @@ class _DeshboardPageState extends State<DeshboardPage> {
               (100 + int.parse(profitCondition)) /
               100)
           .toStringAsFixed(3);
+      print("finalResult..$finalResult");
 
       double finalValue = double.parse(finalResult);
       finalResultRounded = (finalValue * 10).ceil() / 10;
+      print("finalResultRounded..$finalResultRounded");
       selectedDiscount = null;
       discountResul = 0;
-  });
+    });
   }
 
   void applyDiscount(String? value) {
