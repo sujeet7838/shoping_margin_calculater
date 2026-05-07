@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:calculater/model/noOfPage.dart';
 import 'package:calculater/repositeries/calculator_repo.dart';
+import 'package:calculater/utils/custom_app_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,10 +45,19 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
 
   // Image slide ////////
   double discountResul = 0;
-  String? selectedDiscount;
+   int? selectedDiscount;
   bool isSliderVisible = false;
+  bool isSliderVisibleSpiral = false;
+  bool isSliderVisibleGlu = false;
   int currentIndex = 0;
-
+  List<int> discountList = List.generate(50, (index) => index + 1);
+  // spiral image
+  final List<String> sPiralImages = [
+    "https://5.imimg.com/data5/SELLER/Default/2023/6/313423158/CU/ID/JL/2143736/spiral-book-binding-service-1000x1000.png",
+    "https://5.imimg.com/data5/SELLER/Default/2022/9/JD/YQ/NZ/49313558/spiral-binding-notebook-1000x1000.jpg",
+    "https://5.imimg.com/data5/SELLER/Default/2024/8/446551119/TS/TR/VQ/12319560/spiral-notebook-500x500.png",
+  ];
+  // staple image
   final List<String> images = [
     "https://5.imimg.com/data5/SELLER/Default/2023/11/363678670/AG/PG/NW/47274985/new-product-500x500.jpeg",
     "https://5.imimg.com/data5/SELLER/Default/2023/11/363678725/QQ/PA/TR/47274985/new-product-500x500.jpeg",
@@ -55,6 +65,12 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
     "https://5.imimg.com/data5/SELLER/Default/2023/11/363572114/TH/SQ/LC/47274985/new-product-500x500.jpeg",
     "https://5.imimg.com/data5/SELLER/Default/2023/11/363572097/NI/FQ/YQ/47274985/new-product-500x500.jpeg",
     "https://5.imimg.com/data5/SELLER/Default/2023/11/363678734/UN/LQ/OY/47274985/new-product-500x500.jpeg",
+  ];
+  // glu image
+  final List<String> gluImages = [
+    "https://4.imimg.com/data4/RX/TX/GLADMIN-1823819/perfect-bind-notebooks-250x250.jpg",
+    "https://m.media-amazon.com/images/I/71abiNvD7pL._AC_UF350,350_QL80_.jpg",
+    "https://avid360.in/public/website_files/img/PERFECT-BIND-NOTEBOOK_jpeg.jpg",
   ];
 
   /// ------------------ STATIC DROPDOWN 1 ------------------
@@ -128,17 +144,10 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'NoteBook B2B',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 238, 112, 154),
+      appBar: CustomAppBar(
+        title: "NoteBook B2B",
+        subtitle: "Rajsu Enterprises",
+        logoPath: "assets/images/logo.png",
       ),
       body:
           isLoading
@@ -151,7 +160,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Card(
-                        elevation: 4,
+                        elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -169,7 +178,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                     child: Text(
                                       "Article",
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -181,6 +190,24 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                       isExpanded: true,
                                       hint: Text("Select a bound"),
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(
                                             20,
@@ -201,8 +228,25 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                         setState(() {
                                           onTypeChanged(value);
                                           articlevalue = value!;
-                                          isSliderVisible = true;
-                                          //print("article value $articlevalue");
+                                          if (articlevalue == "Sprial Bound") {
+                                            isSliderVisibleSpiral = true;
+                                            isSliderVisibleGlu = false;
+                                            isSliderVisible = false;
+                                          } else if (articlevalue ==
+                                              "Staple bound") {
+                                            isSliderVisibleSpiral = false;
+                                            isSliderVisibleGlu = false;
+                                            isSliderVisible = true;
+                                          } else if (articlevalue ==
+                                              "Glu Bound") {
+                                            isSliderVisibleSpiral = false;
+                                            isSliderVisible = false;
+                                            isSliderVisibleGlu = true;
+                                          } else {
+                                            isSliderVisibleSpiral = false;
+                                            isSliderVisible = false;
+                                            isSliderVisibleGlu = false;
+                                          }
                                         });
                                       },
                                     ),
@@ -216,7 +260,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                       SizedBox(height: 10),
                       // second card
                       Card(
-                        elevation: 4,
+                        elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -234,7 +278,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                     child: Text(
                                       "Model",
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -245,6 +289,24 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                     child: DropdownButtonFormField<String>(
                                       hint: Text("Select a model"),
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(
                                             20,
@@ -424,7 +486,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                       SizedBox(height: 10),
                       // third card
                       Card(
-                        elevation: 4,
+                        elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -442,7 +504,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                     child: Text(
                                       "Cover",
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -459,11 +521,29 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                       ),
                                       readOnly: true,
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         // color: Colors.grey,
                                         fontWeight: FontWeight.normal,
                                       ),
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
                                         filled: false,
                                         contentPadding: EdgeInsets.only(
                                           left: 15.0,
@@ -492,7 +572,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
 
                       //fourth card
                       Card(
-                        elevation: 4,
+                        elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -510,7 +590,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                     child: Text(
                                       "Board",
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -519,19 +599,37 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                   /// INPUT
                                   Expanded(
                                     child: TextField(
-                                      
                                       controller: TextEditingController(
-                                        text: selectedPage != null
-                                            ? boardType
-                                            : 'Select a board',
+                                        text:
+                                            selectedPage != null
+                                                ? boardType
+                                                : 'Select a board',
                                       ),
                                       readOnly: true,
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         // color: Colors.grey,
                                         fontWeight: FontWeight.normal,
                                       ),
                                       decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
                                         filled: false,
                                         contentPadding: EdgeInsets.only(
                                           left: 15.0,
@@ -559,8 +657,8 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                       SizedBox(height: 10),
 
                       // fifth card
-                          Card(
-                        elevation: 4,
+                      Card(
+                        elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -578,7 +676,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                                     child: Text(
                                       "Page",
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -586,73 +684,101 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
 
                                   /// INPUT
                                   Expanded(
-                                    child:     DropdownButtonFormField<Map<String, dynamic>>(
-                        hint: Text("Select a page"),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        value: selectedPaper,
-                        items:
-                            filteredPapers
-                                .map<DropdownMenuItem<Map<String, dynamic>>>(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(e["name"]),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged:
-                            filteredPapers.isEmpty
-                                ? null
-                                : (val) {
-                                  setState(() {
-                                    selectedPaper = val;
-                                    pagevalue = selectedPaper!["value"];
+                                    child: DropdownButtonFormField<
+                                      Map<String, dynamic>
+                                    >(
+                                      hint: Text("Select a page"),
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                      ),
+                                      value: selectedPaper,
+                                      items:
+                                          filteredPapers
+                                              .map<
+                                                DropdownMenuItem<
+                                                  Map<String, dynamic>
+                                                >
+                                              >(
+                                                (e) => DropdownMenuItem(
+                                                  value: e,
+                                                  child: Text(e["name"]),
+                                                ),
+                                              )
+                                              .toList(),
+                                      onChanged:
+                                          filteredPapers.isEmpty
+                                              ? null
+                                              : (val) {
+                                                setState(() {
+                                                  selectedPaper = val;
+                                                  pagevalue =
+                                                      selectedPaper!["value"];
 
-                                    if (selectedPaper!["name"]! ==
-                                        "Malyscian/58") {
-                                      pageRate = "88.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "East Cost/58") {
-                                      pageRate = "92.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "JK/58") {
-                                      pageRate = "92.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "Century Classic/57") {
-                                      pageRate = "97.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "Nani/57") {
-                                      pageRate = "82.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "Century/56") {
-                                      pageRate = "94.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "ABC/56") {
-                                      pageRate = "84.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "Silver/54") {
-                                      pageRate = "74.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "Indra Plt/54") {
-                                      pageRate = "62.50";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "Indra Gold/54") {
-                                      pageRate = "49.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "DT/52") {
-                                      pageRate = "58.00";
-                                    } else if (selectedPaper!["name"]! ==
-                                        "Indra Gold/48") {
-                                      pageRate = "51.00";
-                                    } else {
-                                      pageRate = "Select a page rate";
-                                    }
-                                  });
-                                },
-                      ),
+                                                  if (selectedPaper!["name"]! ==
+                                                      "Malyscian/58") {
+                                                    pageRate = "88.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "East Cost/58") {
+                                                    pageRate = "92.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "JK/58") {
+                                                    pageRate = "92.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "Century Classic/57") {
+                                                    pageRate = "97.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "Nani/57") {
+                                                    pageRate = "82.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "Century/56") {
+                                                    pageRate = "94.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "ABC/56") {
+                                                    pageRate = "84.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "Silver/54") {
+                                                    pageRate = "74.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "Indra Plt/54") {
+                                                    pageRate = "62.50";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "Indra Gold/54") {
+                                                    pageRate = "49.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "DT/52") {
+                                                    pageRate = "58.00";
+                                                  } else if (selectedPaper!["name"]! ==
+                                                      "Indra Gold/48") {
+                                                    pageRate = "51.00";
+                                                  } else {
+                                                    pageRate =
+                                                        "Select a page rate";
+                                                  }
+                                                });
+                                              },
+                                    ),
                                   ),
                                 ],
                               ),
@@ -660,14 +786,11 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                           ),
                         ),
                       ),
-                   
-                  
-                  
 
                       SizedBox(height: 10),
                       // sixth card
-                          Card(
-                        elevation: 4,
+                      Card(
+                        elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -693,212 +816,329 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
 
                                   /// INPUT
                                   Expanded(
-                                    child:  DropdownButtonFormField<NoOfPageModel>(
-                        value: selectedNoOfPage,
-                        hint: Text("Select a no of page"),
-                        items:
-                            noOfPage.map((nopageValue) {
-                              return DropdownMenuItem<NoOfPageModel>(
-                                value: nopageValue,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 16.0),
-                                  child: Text(nopageValue.name),
-                                ),
-                              );
-                            }).toList(),
-                        onChanged: (NoOfPageModel? newValueNoPage) {
-                          setState(() {
-                            selectedNoOfPage = newValueNoPage;
+                                    child: DropdownButtonFormField<
+                                      NoOfPageModel
+                                    >(
+                                      value: selectedNoOfPage,
+                                      hint: Text("Select a no of page"),
+                                      items:
+                                          noOfPage.map((nopageValue) {
+                                            return DropdownMenuItem<
+                                              NoOfPageModel
+                                            >(
+                                              value: nopageValue,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  left: 16.0,
+                                                ),
+                                                child: Text(nopageValue.name),
+                                              ),
+                                            );
+                                          }).toList(),
+                                      onChanged: (
+                                        NoOfPageModel? newValueNoPage,
+                                      ) {
+                                        setState(() {
+                                          selectedNoOfPage = newValueNoPage;
 
-                            if (articlevalue == "Sprial Bound") {
-                              if (int.parse(selectedNoOfPage!.name) >= 8 &&
-                                  int.parse(selectedNoOfPage!.name) <= 100) {
-                                final lbrcost = 2.50;
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      104 &&
-                                  int.parse(selectedNoOfPage!.name) <= 148) {
-                                final lbrcost = 3.00;
+                                          if (articlevalue == "Sprial Bound") {
+                                            if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    8 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    100) {
+                                              final lbrcost = 2.50;
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    104 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    148) {
+                                              final lbrcost = 3.00;
 
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      152 &&
-                                  int.parse(selectedNoOfPage!.name) <= 200) {
-                                final lbrcost = 3.25;
-                                // final lbrcost =
-                                //     1.5 /
-                                //     120 *
-                                //     int.parse(selectedNoOfPage!.name);
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      204 &&
-                                  int.parse(selectedNoOfPage!.name) <= 252) {
-                                final lbrcost = 3.50;
-                                // final lbrcost =
-                                //     1.5 /
-                                //     120 *
-                                //     int.parse(selectedNoOfPage!.name);
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      256 &&
-                                  int.parse(selectedNoOfPage!.name) <= 300) {
-                                final lbrcost = 4.00;
-                                // final lbrcost =
-                                //     1.5 /
-                                //     120 *
-                                //     int.parse(selectedNoOfPage!.name);
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      304 &&
-                                  int.parse(selectedNoOfPage!.name) <= 352) {
-                                final lbrcost = 4.50;
-                                // final lbrcost =
-                                //     1.5 /
-                                //     120 *
-                                //     int.parse(selectedNoOfPage!.name);
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      356 &&
-                                  int.parse(selectedNoOfPage!.name) <= 400) {
-                                final lbrcost = 5.00;
-                                // final lbrcost =
-                                //     1.5 /
-                                //     120 *
-                                //     int.parse(selectedNoOfPage!.name);
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      404 &&
-                                  int.parse(selectedNoOfPage!.name) <= 452) {
-                                final lbrcost = 5.50;
-                                // final lbrcost =
-                                //     1.5 /
-                                //     120 *
-                                //     int.parse(selectedNoOfPage!.name);
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      456 &&
-                                  int.parse(selectedNoOfPage!.name) <= 500) {
-                                final lbrcost = 6.00;
-                                // final lbrcost =
-                                //     1.5 /
-                                //     120 *
-                                //     int.parse(selectedNoOfPage!.name);
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              }
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    152 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    200) {
+                                              final lbrcost = 3.25;
+                                              // final lbrcost =
+                                              //     1.5 /
+                                              //     120 *
+                                              //     int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    204 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    252) {
+                                              final lbrcost = 3.50;
+                                              // final lbrcost =
+                                              //     1.5 /
+                                              //     120 *
+                                              //     int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    256 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    300) {
+                                              final lbrcost = 4.00;
+                                              // final lbrcost =
+                                              //     1.5 /
+                                              //     120 *
+                                              //     int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    304 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    352) {
+                                              final lbrcost = 4.50;
+                                              // final lbrcost =
+                                              //     1.5 /
+                                              //     120 *
+                                              //     int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    356 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    400) {
+                                              final lbrcost = 5.00;
+                                              // final lbrcost =
+                                              //     1.5 /
+                                              //     120 *
+                                              //     int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    404 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    452) {
+                                              final lbrcost = 5.50;
+                                              // final lbrcost =
+                                              //     1.5 /
+                                              //     120 *
+                                              //     int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    456 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    500) {
+                                              final lbrcost = 6.00;
+                                              // final lbrcost =
+                                              //     1.5 /
+                                              //     120 *
+                                              //     int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            }
 
-                              //////////////////////////////////////Sprial Bound///////////////////////////////////
-                            } else if (articlevalue == "Staple bound") {
-                              //labourCost Staple bound
-                              if (selectedNoOfPage!.name == "2") {
-                                labourCost = "";
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      8 &&
-                                  int.parse(selectedNoOfPage!.name) <= 60) {
-                                labourCost = "0.35";
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      64 &&
-                                  int.parse(selectedNoOfPage!.name) <= 96) {
-                                labourCost = "0.45";
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      100 &&
-                                  int.parse(selectedNoOfPage!.name) <= 300) {
-                                final lbrcost =
-                                    0.70 /
-                                    120 *
-                                    int.parse(selectedNoOfPage!.name);
-                                labourCost = lbrcost.toStringAsFixed(3);
-                              } else {
-                                labourCost = "0";
-                                
-                              }
-                            } else if (articlevalue == "Glu Bound") {
-                              //labourCost "Glu Bound
-                              if (int.parse(selectedNoOfPage!.name) >= 0 &&
-                                  int.parse(selectedNoOfPage!.name) <= 200) {
-                                final lbrcost = 2.5;
+                                            //////////////////////////////////////Sprial Bound///////////////////////////////////
+                                          } else if (articlevalue ==
+                                              "Staple bound") {
+                                            //labourCost Staple bound
+                                            if (selectedNoOfPage!.name == "2") {
+                                              labourCost = "";
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    8 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    60) {
+                                              labourCost = "0.35";
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    64 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    96) {
+                                              labourCost = "0.45";
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    100 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    300) {
+                                              final lbrcost =
+                                                  0.70 /
+                                                  120 *
+                                                  int.parse(
+                                                    selectedNoOfPage!.name,
+                                                  );
+                                              labourCost = lbrcost
+                                                  .toStringAsFixed(3);
+                                            } else {
+                                              ScaffoldMessenger.of(
+                                                context,
+                                              ).showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    "Please select GLU Bond Article after 300 pages",
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          } else if (articlevalue ==
+                                              "Glu Bound") {
+                                            //labourCost "Glu Bound
+                                            if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    0 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    200) {
+                                              final lbrcost = 2.5;
 
-                                labourCost = double.parse(
-                                  (springCost +
-                                          panniCost +
-                                          packingCost +
-                                          lbrcost)
-                                      .toString(),
-                                ).toStringAsFixed(2);
-                              } else if (int.parse(selectedNoOfPage!.name) >=
-                                      204 &&
-                                  int.parse(selectedNoOfPage!.name) <= 500) {
-                                // final lbrcost = "5.00";
-                                final lbrcost =
-                                    1.5 /
-                                    120 *
-                                    int.parse(selectedNoOfPage!.name);
+                                              labourCost = double.parse(
+                                                (springCost +
+                                                        panniCost +
+                                                        packingCost +
+                                                        lbrcost)
+                                                    .toString(),
+                                              ).toStringAsFixed(2);
+                                            } else if (int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) >=
+                                                    204 &&
+                                                int.parse(
+                                                      selectedNoOfPage!.name,
+                                                    ) <=
+                                                    500) {
+                                              // final lbrcost = "5.00";
+                                              final lbrcost =
+                                                  1.5 /
+                                                  120 *
+                                                  int.parse(
+                                                    selectedNoOfPage!.name,
+                                                  );
 
-                                labourCost = (0 + 0 + 0.50 + lbrcost)
-                                    .toStringAsFixed(2);
-                              }
-                            }
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      ),
+                                              labourCost = (0 +
+                                                      0 +
+                                                      0.50 +
+                                                      lbrcost)
+                                                  .toStringAsFixed(2);
+                                            }
+                                          }
+                                        });
+                                      },
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -907,7 +1147,64 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                         ),
                       ),
                       SizedBox(height: 15),
+                      // spiral bound image slider
+                      if (isSliderVisibleSpiral)
+                        Column(
+                          children: [
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                //height: 150,
+                                autoPlay: true, // 🔥 auto scroll ON
+                                autoPlayInterval: Duration(seconds: 3),
+                                autoPlayAnimationDuration: Duration(
+                                  milliseconds: 800,
+                                ),
+                                enlargeCenterPage: true,
+                                viewportFraction: 0.9,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    currentIndex = index;
+                                  });
+                                },
+                              ),
+                              items:
+                                  sPiralImages.map((url) {
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(0),
+                                      child: Image.network(
+                                        url,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
 
+                            // 🔵 Indicator (dots)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children:
+                                  sPiralImages.asMap().entries.map((entry) {
+                                    return Container(
+                                      width: currentIndex == entry.key ? 12 : 8,
+                                      height:
+                                          currentIndex == entry.key ? 12 : 8,
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:
+                                            currentIndex == entry.key
+                                                ? Colors.blue
+                                                : Colors.grey,
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+                          ],
+                        ),
+                      // staple bound image slider
                       if (isSliderVisible)
                         Column(
                           children: [
@@ -965,50 +1262,123 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                           ],
                         ),
 
+                      // glu bound image slider
+                      if (isSliderVisibleGlu)
+                        Column(
+                          children: [
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                //height: 150,
+                                autoPlay: true, // 🔥 auto scroll ON
+                                autoPlayInterval: Duration(seconds: 3),
+                                autoPlayAnimationDuration: Duration(
+                                  milliseconds: 800,
+                                ),
+                                enlargeCenterPage: true,
+                                viewportFraction: 0.9,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    currentIndex = index;
+                                  });
+                                },
+                              ),
+                              items:
+                                  gluImages.map((url) {
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(0),
+                                      child: Image.network(
+                                        url,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+
+                            // 🔵 Indicator (dots)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children:
+                                  gluImages.asMap().entries.map((entry) {
+                                    return Container(
+                                      width: currentIndex == entry.key ? 12 : 8,
+                                      height:
+                                          currentIndex == entry.key ? 12 : 8,
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:
+                                            currentIndex == entry.key
+                                                ? Colors.blue
+                                                : Colors.grey,
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+                          ],
+                        ),
+
                       SizedBox(height: 15),
 
                       Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                selectedNoOfPage == null ||
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(10),
+
+                            /// 👇 Disable logic
+                            onTap:
+                                (selectedNoOfPage == null ||
                                         articlevalue.isEmpty ||
                                         modelvalue.isEmpty ||
                                         colorValue.isEmpty ||
                                         boardvalue.isEmpty ||
-                                        pagevalue.isEmpty
-                                    ? Colors
-                                        .grey // disabled color
-                                    : Colors.pinkAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          onPressed:
-                              selectedNoOfPage == null ||
-                                      articlevalue.isEmpty ||
-                                      modelvalue.isEmpty ||
-                                      colorValue.isEmpty ||
-                                      boardvalue.isEmpty ||
-                                      pagevalue.isEmpty
-                                  ? null // 🚫 button disabled
-                                  : () {
-                                    _multiply(
-                                      articlevalue,
-                                      sizeOfPage,
-                                      boardPrice,
-                                      pagevalue,
-                                      pageRate,
-                                      labourCost,
-                                      selectedNoOfPage,
-                                    );
-                                  },
-                          child: const Text(
-                            'Calculate',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                                        pagevalue.isEmpty)
+                                    ? null
+                                    : () {
+                                      _multiply(
+                                        articlevalue,
+                                        sizeOfPage,
+                                        boardPrice,
+                                        pagevalue,
+                                        pageRate,
+                                        labourCost,
+                                        selectedNoOfPage,
+                                      );
+                                    },
+
+                            child: Container(
+                              height: 40,
+                              width: 150,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+
+                                /// 👇 Dynamic color (enabled / disabled)
+                                color:
+                                    (selectedNoOfPage == null ||
+                                            articlevalue.isEmpty ||
+                                            modelvalue.isEmpty ||
+                                            colorValue.isEmpty ||
+                                            boardvalue.isEmpty ||
+                                            pagevalue.isEmpty)
+                                        ? Colors.grey
+                                        : Colors.pinkAccent,
+                              ),
+
+                              child: Text(
+                                "Calculate",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -1033,84 +1403,44 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
                           SizedBox(width: 10),
 
                           /// 🔵 Discount Dropdown
-                          Expanded(
+                         Expanded(
                             flex: 1,
                             child: DropdownButtonFormField<int>(
                               decoration: InputDecoration(
                                 labelText: "Discount %",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    12,
-                                  ), // 🔥 yaha round hoga
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              value:
-                                  selectedDiscount != null
-                                      ? int.parse(
-                                        selectedDiscount!.replaceAll('%', ''),
-                                      )
-                                      : null,
+
+                              value: selectedDiscount,
+
                               items:
-                                  [
-                                        1,
-                                        2,
-                                        3,
-                                        4,
-                                        5,
-                                        6,
-                                        7,
-                                        8,
-                                        9,
-                                        10,
-                                        11,
-                                        12,
-                                        13,
-                                        14,
-                                        15,
-                                        16,
-                                        17,
-                                        18,
-                                        19,
-                                        20,
-                                        21,
-                                        22,
-                                        23,
-                                        24,
-                                        25,
-                                        26,
-                                        27,
-                                        28,
-                                        29,
-                                        30,
-                                        31,
-                                        32,
-                                        33,
-                                        34,
-                                        35,
-                                        36,
-                                        37,
-                                        38,
-                                        39,
-                                        40,
-                                        41,
-                                        42,
-                                        43,
-                                        44,
-                                        45,
-                                        46,
-                                        47,
-                                        48,
-                                        49,
-                                        50,
-                                      ]
-                                      .map(
-                                        (e) => DropdownMenuItem(
-                                          value: e,
-                                          child: Text("$e%"),
-                                        ),
-                                      )
-                                      .toList(),
+                                  discountList.map((e) {
+                                    return DropdownMenuItem(
+                                      value: e,
+                                      child: Text("$e%"),
+                                    );
+                                  }).toList(),
+
                               onChanged: (value) {
+                                setState(() {
+                                  selectedDiscount = value;
+                                });
                                 applyDiscount("$value%");
                               },
                             ),
@@ -1223,7 +1553,7 @@ class _DeshboardB2BPageState extends State<DeshboardB2BPage> {
 
   void applyDiscount(String? value) {
     setState(() {
-      selectedDiscount = value;
+      selectedDiscount = value != null ? int.parse(value.replaceAll('%', '')) : null;
 
       double discount = double.parse(value!.replaceAll('%', ''));
 
